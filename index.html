@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.css" type="text/css" >
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/estilo.css" type="text/css">
+
+        <title>Mis Perris</title>
+    </head>
+    <body>
+        <!--Navbar-->
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #85d4b7;">
+                    <a class="navbar-brand" href="#"><img src=img/logo.png class="d-block w-100 rounded mx-auto" alt="Logo"></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                  
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-navbar" href="#">Inicio <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-navbar" href="#rescatados">Quienes Somos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-navbar" href="#servicios">Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-navbar" href="#redesSociales">Contáctanos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-navbar" href="#formulario" id="mostrar">Registrarse</a>
+                        </li>
+                      </ul>
+                </div>
+            </nav>
+        </header>
+        <!--Fin Navbar-->
+        <!--Carousel-->
+        <div class="container-fluid" style="background-color: #6dccaa;">
+            
+            <!--Redes Sociales-->
+            <div class="row" id="redesSociales">
+                <div class="col-md-12 text-center">
+                    <a href="https://es-la.facebook.com/" target="_blank"><span class="fa-stack fa-2x">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                    </span></a>
+                    <a href="https://www.google.es/" target="_blank"><span class="fa-stack fa-2x">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-google-plus-g fa-stack-1x fa-inverse"></i>
+                    </span></a> 
+                    <a href="https://www.instagram.com/" target="_blank"><span class="fa-stack fa-2x">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                    </span></a>
+                    <a href="https://www.google.com/intl/es/gmail/about/#" target="_blank"><span class="fa-stack fa-2x">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                    </span></a>
+                </div>
+            </div>
+            <!--Fin Redes Sociales-->
+        </div>
+        <!--Fin Carousel-->
+        
+        <!--Informacion de la pagina-->
+        
+        <!--Fin Informacion de la pagina-->
+        
+        <!--Formulario-->
+        <div class="container">
+            <form action="#" id="formulario" method="GET">
+            <h1>Registrarse</h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Run</label>
+                        <input required type="text" class="form-control" name="run" placeholder="Ingrese Run 12345678-9">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Nombre Completo</label>
+                        <input required type="text" class="form-control" name="nombre" placeholder="Ingrese nombre completo">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Fecha de Nacimiento</label>
+                        <input required type="date" class="form-control" name="fechaNacimiento" >
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input required type="email" class="form-control" name="correo" placeholder="Ingrese Correo Electrónico">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="number" class="form-control" name="telefono" placeholder="Ingrese teléfono de contacto">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="region">Región</label>
+                        <select required class="form-control" name="region" id="region">
+                            <option hidden value="">Seleccione Region</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="comuna">Comuna</label>
+                        <select required class="form-control" name="comuna" id="comuna">
+                            <option hidden value="">Seleccione Comuna</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Tipo de vivienda</label>
+                        <select required class="form-control" name="tipoVivienda">
+                            <option hidden value="">Seleccione Tipo</option>
+                            <option value="Casa con patio grande">Casa con patio grande</option>
+                            <option value="Casa con patio pequeño">Casa con patio pequeño</option>
+                            <option value="Casa sin patio">Casa sin patio</option>
+                            <option value="Departamento">Departamento</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="reset" class="btn btn-danger btn-block">Limpiar</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-outline-info btn-block" id="ocultar">Ocultar</button>
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" class="btn btn-success btn-block" value="Guardar">
+                </div>
+            </div>
+            </form>
+        </div>
+        <!--Fin Formulario-->
+        
+        <!--Mostrar Inscritos-->
+        
+        <!--Fin Mostrar Elementos-->
+
+        <!--Gallery-->
+        
+        <!--Fin Gallery-->
+        <footer >
+            <div class="container-fluid" style="background-color:#e6e6e6;">
+                <h1>Desarrollo web y mobile</h1>
+            </div>
+        </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.validate.js"></script>
+    <script src="js/jquery.Rut.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
