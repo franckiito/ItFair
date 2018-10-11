@@ -17,21 +17,31 @@ $.validator.addMethod("rut", function(value, element) {
 $(function(){
     cargaRegiones()    
     validaFormulario()
-    ocultar()
+    $("#registro").hide()
+    $("#iniciarSesion").hide()
 })
 
-function mostrar(){
-    $("#formulario").show()
-    $("#datos").show()
-}
-
 function ocultar(){
-    $("#formulario").hide()
-    $("#datos").hide()
+    $("#carro").hide()
+    $("#servicio").hide()
+    $("#registro").hide()
+    $("#iniciarSesion").hide()
+    $("#fin").hide()
 }
 
-$("#mostrar").on("click",function () {
-    mostrar()
+$("#registrar").on("click",function () {
+    ocultar()
+    $("#registro").show()
+})
+
+$("#iniciar").on("click",function () {
+    ocultar()
+    $("#iniciarSesion").show()
+})
+
+$("#servicio").on("click",function () {
+    ocultar()
+    $("#servicio").show()
 })
 
 $("#ocultar").on("click",function () {
