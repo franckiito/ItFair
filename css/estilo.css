@@ -26,7 +26,7 @@ body    {
 }
 
 .fa-inverse {
-    color: #6dccaa;
+    color: #89a4d8;
 }
 
 .fa-stack {
@@ -43,14 +43,14 @@ body    {
 
 .btn-navbar {
     color: #fff;
-    background-color: #6dccaa;
-    border-color: #6dccaa;
+    background-color: #89a4d8;
+    border-color: #89a4d8;
 }
 
 .btn-navbar:hover {
     color: #fff;
-    background-color: #6dccaa;
-    border-color: #9be0c7;
+    background-color: #89a4d8;
+    border-color: #89a4d8;
 }
 
 .nav-link {
