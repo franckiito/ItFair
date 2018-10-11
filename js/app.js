@@ -39,6 +39,36 @@ $("#ocultar").on("click",function () {
 })
 
 
+var regex = /^(.+?)(\d+)$/i;
+var cloneIndex = $(".abuelos").length + 1;
+
+function clone(){
+    $(this).parents(".abuelos").clone(true)
+        .insertAfter(".abuelos")
+        .attr("id", "abuelos" +  cloneIndex)
+        .find("*")
+        .each(function() {
+            var id = this.id || "";
+            var match = id.match(regex) || [];
+            if (match.length == 3) {
+                this.id = match[1] + (cloneIndex);
+            }
+        })
+        .on('click', 'button.clone', clone)
+        .on('click', 'button.remove', remove);
+        $('#value' + cloneIndex).html(cloneIndex);
+        $('#abuelos' + cloneIndex).removeClass("abuelos");
+        $('#abuelos' + cloneIndex).find("button.clone").remove();
+    cloneIndex++;
+}
+function remove(){
+    cloneIndex--;
+    $(this).parents("#abuelos" + cloneIndex).remove();
+}
+$("button.clone").on("click", clone);
+
+//$("button.remove").on("click", remove);
+
 function validaFormulario(){
     $("#formulario").validate({
         rules:{

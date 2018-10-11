@@ -15,8 +15,9 @@
     <body>
         <!--Navbar-->
         <header>
+
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #89a4d8;">
-                    <a class="navbar-brand" href="#"><img src=img/logo.png class="d-block w-100 rounded mx-auto" alt="Logo"></a>
+                    <a class="navbar-brand" href="#"><img src=img/logo.PNG class="d-block w-100 rounded mx-auto" alt="Logo"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
@@ -135,7 +136,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Run</label>
+                        <label>Rut</label>
                         <input required type="text" class="form-control" name="run" placeholder="Ingrese Run 12345678-9">
                     </div>
                 </div>
@@ -162,41 +163,83 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Teléfono</label>
-                        <input type="number" class="form-control" name="telefono" placeholder="Ingrese teléfono de contacto">
+                        <input type="text" class="form-control" name="telefono" placeholder="Ingrese teléfono de contacto">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="region">Región</label>
-                        <select required class="form-control" name="region" id="region">
-                            <option hidden value="">Seleccione Region</option>
-                        </select>
+                        <label for="region">Dirección</label>
+                        <input type="text" class="form-control" name="direccion" placeholder="Dirección">
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="comuna">Comuna</label>
-                        <select required class="form-control" name="comuna" id="comuna">
-                            <option hidden value="">Seleccione Comuna</option>
-                        </select>
+
+            <hr />
+            <div class="abuelos" id="abuelos1">                
+                <h1>Abuelito <label id="value1" name="value[]"></label></h1>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Rut</label>
+                            <input required id="rut1" name="rut[]" type="text" class="form-control" placeholder="Ingrese Run 12345678-9">
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Tipo de vivienda</label>
-                        <select required class="form-control" name="tipoVivienda">
-                            <option hidden value="">Seleccione Tipo</option>
-                            <option value="Casa con patio grande">Casa con patio grande</option>
-                            <option value="Casa con patio pequeño">Casa con patio pequeño</option>
-                            <option value="Casa sin patio">Casa sin patio</option>
-                            <option value="Departamento">Departamento</option>
-                        </select>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Nombre Completo</label>
+                            <input required id="nombre_completo1" name="nombre_completo[]" type="text" class="form-control" placeholder="Ingrese nombre completo">
+                        </div>
                     </div>
-                </div>
-            </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Fecha de Nacimiento</label>
+                            <input required id="fecha_nacimiento1" name="fecha_nacimiento[]" type="date" class="form-control" >
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">                
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input type="text" id="telefono1" name="telefono[]" class="form-control" placeholder="Ingrese teléfono de contacto">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="region">Dirección</label>
+                                <input type="text" id="direccion1" name="direccion[]"  class="form-control" placeholder="Dirección">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="region">Remedio</label>
+                                <input type="text" class="form-control" id="remedio1" name="remedio[]" placeholder="Remedio">
+                            </div>
+                        </div>                    
+                    </div>
+                    <div class="row">                
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Alarma</label>
+                                <input type="number" class="form-control" id="alarma1" name="alarma[]" placeholder="Ingrese su alarma ej. 22:30">
+                            </div>
+                        </div>                                                               
+                    </div>
+
+                    <div class="row">                                          
+                        <div class="col-md-4">
+                            <label for="region">Puede agregar más abuelos</label>
+                        <button type="button" class="btn btn-outline-info btn-block clone" id="agregar_abuelo">Agregar otro abuelo</button>
+                    </div>  
+                    <!--<div class="col-md-4">
+                            <label for="region">Puede eliminar</label>
+                        <button type="button" class="btn btn-outline-info btn-block remove" id="eliminar">Eliminar abuelo</button>
+                    </div>-->            
+                </div>                    
+            </div>                
+                
             
+            <hr />
             <div class="row">
                 <div class="col-md-4">
                     <button type="reset" class="btn btn-danger btn-block">Limpiar</button>
