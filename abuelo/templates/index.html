@@ -128,6 +128,15 @@
         <!--Fin Carousel-->
         
         <!--Servicios-->
+        {% if messages %}        
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+            </div>            
+            {% endfor %}        
+        {% endif %}
+
+
         <div class="container" id="servicio">
             <h1>Servicios</h1>
             <p>Nuestra plataforma cuenta con servicios de alarmas para ayudar a nuestros abuelos
@@ -147,7 +156,7 @@
         <!--Formulario-->
         <br>
         <div class="container" id="registro">
-            <form action="/cuidador/registrar" id="formulario" method="POST">
+            <form action="/cuidador/registrar" id="" method="POST">
             {% csrf_token %}
             <h1>Registrarse</h1>
                 <div class="row">

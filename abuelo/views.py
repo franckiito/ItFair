@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
-from .models import Cuidador 
+from .models import Cuidador
+from django.contrib import messages
 
 #sistema de autenticación 
 from django.contrib.auth import authenticate,logout, login as auth_login
@@ -23,11 +24,14 @@ def registrar(request):
     contrasenia = request.POST.get('contrasenia','')
 
     cuidador = Cuidador.objects.filter(run=run)
-    if cuidador is None:
-        cuidador = Cuidador(run=run, nombre=nombre, fechaNacimiento=fechaNacimiento, correo=correo, telefono=telefono,  direccion=direccion, contrasenia= contrasenia)
+
+    if len(cuidador) == 0 :
+        cuidador = Cuidador(run=run, nombre=nombre, fechaNacimiento=fechaNacimiento, correo=correo, telefono=telefono,  direccion=direccion, contrasenia= contrasenia)                
         cuidador.save()
+        messages.success(request, 'El usuario fue registrado correctamente.123')
         return render(request,'index.html',{'mensaje':'El usuario fue registrado correctamente.'})
-    else:
+    else:    
+        messages.warning(request, 'El usuario ingresado ya esta registrado. 123')
         return render(request,'index.html',{'mensaje':'El usuario ingresado ya esta registrado.'})
 
 def abuelos(request):
