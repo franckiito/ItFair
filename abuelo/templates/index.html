@@ -6,9 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="css/bootstrap.css" type="text/css" >
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/estilo.css" type="text/css">
+        {% load static %}
+
+        <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css" >
+        <link rel="stylesheet" href="{% static "css/all.css" %}"  type="text/css">
+        <link rel="stylesheet" href="{% static "css/estilo.css" %}" type="text/css">
 
         <title>Help Memory</title>
     </head>
@@ -312,11 +314,11 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="js/jquery-3.3.1.js"></script>
-    <script src="js/popper.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/jquery.validate.js"></script>
-    <script src="js/jquery.Rut.js"></script>
-    <script src="js/app.js"></script>
+    <script src="{% static "js/jquery-3.3.1.js" %}"></script>
+    <script src="{% static "js/popper.js" %}"></script>
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <script src="{% static "js/jquery.validate.js" %}"></script>
+    <script src="{% static "js/jquery.Rut.js" %}"></script>
+    <script src="{% static "js/app.js" %}"></script>
   </body>
 </html>
