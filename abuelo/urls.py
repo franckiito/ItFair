@@ -5,5 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('',views.index, name = "index"),
-    path('abuelos',views.abuelos, name = "abuelos")
+
+    path('abuelos',views.abuelos, name = "abuelos"),
+    path('abuelos/crear', views.crear_abuelo, name="crear_abuelo")
 ]

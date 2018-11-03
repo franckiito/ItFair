@@ -14,3 +14,6 @@ def index(request):
 
 def abuelos(request):
     return render(request, 'abuelos.html')
+
+def crear_abuelo(request):
+    return render(request, 'crear_abuelo.html')
