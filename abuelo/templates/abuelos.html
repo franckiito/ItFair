@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        {% load static %}
+
+        <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css" >
+        <link rel="stylesheet" href="{% static "css/all.css" %}"  type="text/css">
+        <link rel="stylesheet" href="{% static "css/estilo.css" %}" type="text/css">
+
+        <title>Help Memory</title>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                    <!--  Remove dark nav  -->
+                <nav class="nav dark-nav fixed-top">
+                    <div class="container">
+                        <div class="nav-heading">
+                            <button class="toggle-nav" data-toggle="open-navbar1"><i class="fa fa-align-right"></i></button>
+                            <a class="brand" href="#">ItFair</a>
+                        </div>
+                        <div class="menu" id="open-navbar1">
+                            <ul class="list">
+                            <li><a href="#">Bienvenid@, Rossana! </a></li>                    
+                            <li><a href="#">Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <div class="container">   
+                <div class="jumbotron">
+                    <h1 class="display-4">Hola!, Rossana</h1>
+                    <p class="lead">Este es el sitio de administración, acá podrás gestionar y ver el comportamiento de sus abuelitos :)!</p>
+                    <hr class="my-4">
+                    <p>Presione el siguiente botón para agregar uno nuevo.</p>
+                    <button type="button" class="btn btn-primary btn-lg">Registrar nuevo</button>
+                </div>                
+            </div>    
+            <br/> 
+        </div>        
+
+              
+
+          <div class="container">
+            <table class="table table-striped">
+                <thead>
+                  <tr>                    
+                    <th scope="col">#</th>
+                    <th scope="col">Rut</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Remedios</th>
+                    <th scope="col">Localización</th>
+                    <th scope="col">Accion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="col"><img height="50px" width="70px" src="{% static "img/abuelos/abuelo 1.jpg" %}"></th>
+                    <th scope="row">17.355.785-K</th>
+                    <td>Idalio Belmar</td>
+                    <td>28</td>
+                    <td>+56 9 79761468</td>
+                    <td>Ibuprofeno</td>
+                    <td>Ver</td>
+                    <td>Editar | Eliminar</td>
+                  </tr>
+                  <tr>
+                    <th scope="col"><img height="50px" width="70px" src="{% static "img/abuelos/abuelo 1.jpg" %}"></th>
+                    <th scope="row">17.355.785-K</th>
+                    <td>Idalio Belmar</td>
+                    <td>28</td>
+                    <td>+56 9 79761468</td>
+                    <td>Ibuprofeno</td>
+                    <td>Ver</td>
+                    <td>Editar | Eliminar</td>                
+                  </tr>
+                  <tr>
+                    <th scope="col"><img height="50px" width="70px" src="{% static "img/abuelos/abuelo 1.jpg" %}"></th>
+                    <th scope="row">17.355.785-K</th>
+                    <td>Idalio Belmar</td>
+                    <td>28</td>
+                    <td>+56 9 79761468</td>
+                    <td>Ibuprofeno</td>
+                    <td>Ver</td>
+                    <td>Editar | Eliminar</td>                
+                  </tr>
+                </tbody>
+              </table>
+          </div>          
+
+        <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static "js/jquery-3.3.1.js" %}"></script>
+    <script src="{% static "js/popper.js" %}"></script>
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <script src="{% static "js/jquery.validate.js" %}"></script>
+    <script src="{% static "js/jquery.Rut.js" %}"></script>
+    <script src="{% static "js/app.js" %}"></script>
+  </body>
+</html>
