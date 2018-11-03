@@ -62,36 +62,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="col"><img height="50px" width="70px" src="{% static "img/abuelos/abuelo 1.jpg" %}"></th>
-                    <th scope="row">17.355.785-K</th>
-                    <td>Idalio Belmar</td>
-                    <td>28</td>
-                    <td>+56 9 79761468</td>
-                    <td>Ibuprofeno</td>
-                    <td>Ver</td>
-                    <td>Editar | Eliminar</td>
-                  </tr>
-                  <tr>
-                    <th scope="col"><img height="50px" width="70px" src="{% static "img/abuelos/abuelo 1.jpg" %}"></th>
-                    <th scope="row">16.863.353-K</th>
-                    <td>Rossana Hantsch</td>
-                    <td>30</td>
-                    <td>+56 9 79761468</td>
-                    <td>Ibuprofeno</td>
-                    <td>Ver</td>
-                    <td>Editar | Eliminar</td>                
-                  </tr>
-                  <tr>
-                    <th scope="col"><img height="50px" width="70px" src="{% static "img/abuelos/abuelo 1.jpg" %}"></th>
-                    <th scope="row">17.355.785-K</th>
-                    <td>Idalio Belmar</td>
-                    <td>28</td>
-                    <td>+56 9 79761468</td>
-                    <td>Ibuprofeno</td>
-                    <td>Ver</td>
-                    <td>Editar | Eliminar</td>                
-                  </tr>
+                    {% for elemento in abuelos %}
+                        <tr>
+                            <th scope="col"><img height="50px" width="70px" src="/media/{{elemento.foto}}"></th>
+                            <th scope="row">{{elemento.run}}</th>
+                            <td>{{elemento.nombre}}</td>
+                            <td>{{elemento.fechaNacimiento}}</td>
+                            <td>{{elemento.telefono}}</td>
+                            <td></td>
+                            <td>Ver</td>
+                            <td>Editar | Eliminar</td>
+                        </tr>                                                
+                    {% endfor %}
                 </tbody>
               </table>
           </div>          
