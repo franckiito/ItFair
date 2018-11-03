@@ -5,6 +5,8 @@ from django.utils.decorators import method_decorator
 from .models import Cuidador
 from django.contrib import messages
 
+#importar user
+from django.contrib.auth.models import User
 #sistema de autenticación 
 from django.contrib.auth import authenticate,logout, login as auth_login
 
@@ -12,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index(request):
+    usuario = request.session.get('usuario',None)
     return render(request,'index.html')
 
 def registrar(request):
@@ -34,8 +37,31 @@ def registrar(request):
         messages.warning(request, 'El usuario ingresado ya esta registrado. 123')
         return render(request,'index.html',{'mensaje':'El usuario ingresado ya esta registrado.'})
 
+def login_iniciar(request):
+    run = request.POST.get('run','')
+    contrasenia = request.POST.get('contrasenia','')
+    
+    #cuidador = authenticate(request,username=run, password=contrasenia)
+    #print(cuidador)
+    cuidador = Cuidador.objects.filter(run=run).filter(contrasenia=contrasenia)
+    print(cuidador)
+    if cuidador is not None:
+        #auth_login(request, cuidador)
+        request.session['usuario'] = cuidador[0].nombre
+        request.session['id'] = cuidador[0].id
+        #request.session['usuario'] = cuidador.first_name+" "+cuidador.last_name
+        return redirect('abuelos')
+    else:
+        messages.warning(request, 'Las credenciales son incorrectas.')
+        return render(request,'index.html',{'mensaje':'Las credenciales son incorrectas.'})
+
+def cerrar_session(request):
+    del request.session['usuario']
+    return redirect('index')
+
 def abuelos(request):
-    return render(request, 'abuelos.html')
+    usuario = request.session.get('usuario',None)
+    return render(request, 'abuelos.html',{'usuario':usuario})
 
 def crear_abuelo(request):
     return render(request, 'crear_abuelo.html')

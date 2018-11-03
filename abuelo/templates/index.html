@@ -150,7 +150,31 @@
         <!--Fin Servicios-->
 
         <!--Inicio Sesión-->
-        
+        <div class="container">
+            <form action="/login/iniciar" id="iniciarSesion" method="POST">
+                {% csrf_token %}
+                <h1>Iniciar Sesión</h1>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Run</label>
+                            <input required type="text" class="form-control" name="run" placeholder="Ingrese run">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input required type="password" class="form-control" name="contrasenia" placeholder="Contraseña">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">                                          
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-success btn-lg btn-block">Iniciar Sesión</button>
+                    </div>
+                </div> 
+            </form>
+        </div>
         <!--Fin Inicio Sesión-->
 
         <!--Formulario-->
