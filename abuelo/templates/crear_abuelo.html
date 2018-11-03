@@ -39,7 +39,8 @@
 
         <div class="container">
             <div class="jumbotron">
-                <form action="#" method="POST">
+                <form action="/abuelos/save" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <fieldset>
                         <h1>Crear nuevo abuelito</h1>
                     </fieldset>
@@ -67,9 +68,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Apellidos</label>  
+                                <label>Telefono</label>  
                                 <div class="col-md-6">
-                                    <input id="apellidos" name="apellidos" size="2" type="text" placeholder="Ej. Perez Perez" class="form-control input-md" required="">                          
+                                    <input id="telefono" name="telefono"  type="text" placeholder="98765432" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
@@ -97,12 +98,11 @@
                         
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Sexo</label>
-                                <div class="col-md-6">
-                                    <select id="sexo" name="sexo" class="form-control">
-                                    <option value="hombre">Hombre</option>
-                                    <option value="mujer">Mujer</option>
-                                    </select>
+                                <div class="form-group">
+                                    <label>Contraseña</label>
+                                    <div class="col-md-6">
+                                        <input id="password" name="contrasenia" type="password"  class="form-control input-md" required="">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -110,22 +110,11 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Contraseña</label>
+                            <label>Foto</label>
                                 <div class="col-md-6">
-                                    <input id="password" name="edad" type="password"  class="form-control input-md" required="">
+                                    <input id="foto" name="foto" class="input-file" type="file">
                                 </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Foto</label>
-                                <div class="col-md-6">
-                                    <input id="imagen" name="imagen" class="input-file" type="file">
-                                </div>
-                            </div>
-                        </div>
+                        </div>                                        
                     </div>
 
                     <div class="row">
