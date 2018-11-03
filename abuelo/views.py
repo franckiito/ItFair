@@ -48,8 +48,9 @@ def login_iniciar(request):
     print(cuidador)
     if cuidador is not None:
         #auth_login(request, cuidador)
-        request.session['usuario'] = cuidador[0].nombre
+        request.session['usuario'] = cuidador[0].nombre  
         request.session['id'] = cuidador[0].id
+        request.session['rut'] = cuidador[0].run
         #request.session['usuario'] = cuidador.first_name+" "+cuidador.last_name
         return redirect('abuelos')
     else:
@@ -82,8 +83,10 @@ def crear_abuelo_save(request):
 
     abuelo = Abuelo.objects.filter(run=run)
 
-    if len(abuelo) == 0 :
-        cuidador = Cuidador.objects.get(run='16863353-k')
+    if len(abuelo) == 0 :    
+        id = request.session.get('id',None)
+        print(id)
+        cuidador = Cuidador.objects.get(pk=id)
         abuelo = Abuelo(cuidador=cuidador, run=run, nombre=nombre, fechaNacimiento=fechaNacimiento, telefono=telefono,  direccion=direccion, contrasenia= contrasenia, foto=foto)
         abuelo.save()
         messages.success(request, 'El usuario fue registrado correctamente.123')

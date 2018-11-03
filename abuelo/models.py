@@ -10,6 +10,7 @@ class Cuidador(models.Model):
     direccion = models.EmailField(max_length=100)
     telefono = models.CharField(max_length=10)
     contrasenia = models.CharField(max_length=30)
+    correo = models.CharField(max_length=50)
     
     def __str__(self):
         return "CUIDADOR"
