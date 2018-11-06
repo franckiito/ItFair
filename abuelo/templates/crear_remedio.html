@@ -39,27 +39,27 @@
 
         <div class="container">
             <div class="jumbotron">
-                <form action="/perfil/editar/{{cuidador.id}}" method="POST" enctype="multipart/form-data">
+                <form action="/remedio/creado/{{abuelo.id}}" method="POST">
                     {% csrf_token %}
                     <fieldset>
-                        <h1>Editar datos</h1>
+                        <h1>Crear Remedio</h1>
                     </fieldset>
                     <hr/>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Run</label>
+                                <label>Nombre</label>
                                 <div class="col-md-6">
-                                    <input required disabled id="run"  name="run" type="text" placeholder="Ej. 16863353K" class="form-control input-md" required="" value="{{cuidador.run}}">
+                                    <input id="nombre" name="nombre" type="text" placeholder="Ingrese nombre" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
                         
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Nombre Completo</label>  
+                                <label>Descripcion</label>  
                                 <div class="col-md-6">
-                                    <input required id="nombre" name="nombre" type="text" placeholder="Ej. Juan Pedro" class="form-control input-md" value="{{cuidador.nombre}}">                          
+                                    <input id="descripcion" name="descripcion" type="text" placeholder="Ingrese descripcion" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
@@ -68,38 +68,18 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Telefono</label>  
+                                <label>Tratamiento</label>  
                                 <div class="col-md-6">
-                                    <input required id="telefono" name="telefono"  type="text" placeholder="98765432" class="form-control input-md" value="{{cuidador.telefono}}">                          
+                                    <input id="tratamiento" name="tratamiento"  type="text" placeholder="Ingrese tratamiento del remedio" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Correo Electrónico</label>  
+                                <label>Hora Inicio Remedio</label>  
                                 <div class="col-md-6">
-                                    <input required id="correo" name="correo" type="email" class="form-control input-md" value="{{cuidador.correo}}">
-                                </div>
-                            </div>
-                        </div>
-                    
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Fecha Nacimiento</label>  
-                                <div class="col-md-6">
-                                    <input required id="fechaNacimiento" name="fechaNacimiento" type="date" class="form-control input-md" value="{{cuidador.fechaNacimiento}}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Dirección</label>  
-                                <div class="col-md-6">
-                                    <input required id="direccion" name="direccion" type="text" class="form-control input-md" value="{{cuidador.direccion}}">                          
+                                    <input id="horaInicio" name="horaInicio" type="number" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
@@ -108,20 +88,12 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label>Contraseña</label>
-                                    <div class="col-md-6">
-                                        <input required id="contrasenia" name="contrasenia" type="password"  class="form-control input-md">
-                                    </div>
+                                <label>Veces al día</label>  
+                                <div class="col-md-6">
+                                    <input id="cantVeces" name="cantVeces" type="text" placeholder="Ingrese cantidad de veces" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <label>Foto</label>
-                            <div class="col-md-6">
-                                <input required id="foto" name="foto" class="input-file" type="file">
-                            </div>
-                        </div>                                        
                     </div>
 
                     <div class="row">
@@ -129,7 +101,7 @@
                             <div class="form-group">
                                 <label></label>
                                 <div class="col-md-6">
-                                    <button id="guardar" name="guardar" class="form-control btn btn-primary">Guardar</button>
+                                    <button id="guardar" name="guardar" class="form-control btn btn-primary">Crear</button>
                                 </div>
                             </div>
                         </div>                                                

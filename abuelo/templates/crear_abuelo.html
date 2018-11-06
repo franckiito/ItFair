@@ -22,12 +22,12 @@
                     <div class="container">
                         <div class="nav-heading">
                             <button class="toggle-nav" data-toggle="open-navbar1"><i class="fa fa-align-right"></i></button>
-                            <a class="brand" href="#">ItFair</a>
+                            <a class="brand" href="/abuelos">ItFair</a>
                         </div>
                         <div class="menu" id="open-navbar1">
                             <ul class="list">
-                            <li><a href="#">Bienvenid@, Rossana! </a></li>                    
-                            <li><a href="#">Cerrar Sesión</a></li>
+                            <li><a href="/perfil">Bienvenid@, {{usuario}} </a></li>                    
+                            <li><a href="{% url "cerrar_session" %}">Cerrar Sesión</a></li>
                             </ul>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                             <div class="form-group">
                                 <label>Dirección</label>  
                                 <div class="col-md-6">
-                                    <input id="direcicon" name="direccion" type="text" class="form-control input-md" required="">                          
+                                    <input id="direcicon" name="direccion" type="text" placeholder="Ingrese Dirección" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <label>Contraseña</label>
                                     <div class="col-md-6">
-                                        <input id="password" name="contrasenia" type="password"  class="form-control input-md" required="">
+                                        <input id="password" name="contrasenia" type="password" placeholder="Ingrese contraseña" class="form-control input-md" required="">
                                     </div>
                                 </div>
                             </div>
