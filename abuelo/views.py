@@ -84,8 +84,7 @@ def crear_abuelo_save(request):
     abuelo = Abuelo.objects.filter(run=run)
 
     if len(abuelo) == 0 :    
-        id = request.session.get('id',None)
-        print(id)
+        id = request.session.get('id',None)        
         cuidador = Cuidador.objects.get(pk=id)
         abuelo = Abuelo(cuidador=cuidador, run=run, nombre=nombre, fechaNacimiento=fechaNacimiento, telefono=telefono,  direccion=direccion, contrasenia= contrasenia, foto=foto)
         abuelo.save()
@@ -95,4 +94,8 @@ def crear_abuelo_save(request):
         messages.warning(request, 'El usuario ingresado ya esta registrado. 123')
         return render(request,'abuelos.html')
     
+def perfil(request):
+    id = request.session.get('id',None)
+    cuidador = Cuidador.objects.get(pk=id)
     
+    return render(request, 'perfil.html', {'cuidador': cuidador})

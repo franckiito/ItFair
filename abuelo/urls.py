@@ -10,5 +10,7 @@ urlpatterns = [
     path('cuidador/registrar', views.registrar, name="registrar"),
     path('abuelos',views.abuelos, name = "abuelos"),
     path('abuelos/crear', views.crear_abuelo, name="crear_abuelo"),
-    path('abuelos/save', views.crear_abuelo_save, name="crear_abuelo_save")
+    path('abuelos/save', views.crear_abuelo_save, name="crear_abuelo_save"),
+    path('perfil/', views.perfil, name="perfil")
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

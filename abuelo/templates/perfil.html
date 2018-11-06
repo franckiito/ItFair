@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        {% load static %}
+
+        <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css" >
+        <link rel="stylesheet" href="{% static "css/all.css" %}"  type="text/css">
+        <link rel="stylesheet" href="{% static "css/estilo.css" %}" type="text/css">
+
+        <title>Help Memory</title>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                    <!--  Remove dark nav  -->
+                <nav class="nav dark-nav fixed-top">
+                    <div class="container">
+                        <div class="nav-heading">
+                            <button class="toggle-nav" data-toggle="open-navbar1"><i class="fa fa-align-right"></i></button>
+                            <a class="brand" href="#">ItFair</a>
+                        </div>
+                        <div class="menu" id="open-navbar1">
+                            <ul class="list">
+                            <li><a href="#">Bienvenid@, Rossana! </a></li>                    
+                            <li><a href="#">Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>            
+        </div>        
+
+              
+
+        <div class="container">
+            <div class="jumbotron">
+                <form action="/perfil/editar" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset>
+                        <h1>Editar datos</h1>
+                    </fieldset>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Rut</label>
+                                <div class="col-md-6">
+                                    <input id="rut" name="rut" type="text" placeholder="Ej. 16863353K" class="form-control input-md" required="" value="{{cuidador.run}}">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nombres</label>  
+                                <div class="col-md-6">
+                                    <input id="nombres" name="nombres" type="text" placeholder="Ej. Juan Pedro" class="form-control input-md" required="" value="{{cuidador.nombre}}">                          
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Telefono</label>  
+                                <div class="col-md-6">
+                                    <input id="telefono" name="telefono"  type="text" placeholder="98765432" class="form-control input-md" required="" value="{{cuidador.telefono}}">                          
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Fecha Nacimiento</label>  
+                                <div class="col-md-6">
+                                    <input id="fecha_nac" name="fecha_nac" type="date" class="form-control input-md" required="" value="{{cuidador.fechaNacimiento}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Dirección</label>  
+                                <div class="col-md-6">
+                                    <input id="direcicon" name="direccion" type="text" class="form-control input-md" required="" value="{{cuidador.direccion}}">                          
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label>Contraseña</label>
+                                    <div class="col-md-6">
+                                        <input id="password" name="contrasenia" type="password"  class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Foto</label>
+                                <div class="col-md-6">
+                                    <input id="foto" name="foto" class="input-file" type="file">
+                                </div>
+                        </div>                                        
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label></label>
+                                <div class="col-md-6">
+                                    <button id="guardar" name="guardar" class="form-control btn btn-primary">Crear</button>
+                                </div>
+                            </div>
+                        </div>                                                
+                    </div>              
+                </form>
+            </diV>            
+        </div>                
+
+        <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->    
+    <script src="{% static "js/jquery-3.3.1.js" %}"></script>
+    <script src="{% static "js/popper.js" %}"></script>
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <script src="{% static "js/jquery.validate.js" %}"></script>
+    <script src="{% static "js/jquery.Rut.js" %}"></script>
+    <script src="{% static "js/app.js" %}"></script>
+  </body>
+</html>
