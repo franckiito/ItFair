@@ -39,7 +39,7 @@
 
         <div class="container">
             <div class="jumbotron">
-                <form action="/abuelos/save" method="POST" enctype="multipart/form-data">
+                <form action="/abuelos/editado/{{abuelo.id}}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <fieldset>
                         <h1>{{titulo}}</h1>
@@ -48,9 +48,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Rut</label>
+                                <label>Run</label>
                                 <div class="col-md-6">
-                                    <input id="rut" name="rut" type="text" placeholder="Ej. 16863353K" class="form-control input-md" required="">                          
+                                    <input id="rut" name="rut" enable="false" value="{{abuelo.run}}" type="text" placeholder="Ej. 16863353K" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                             <div class="form-group">
                                 <label>Nombres</label>  
                                 <div class="col-md-6">
-                                    <input id="nombres" name="nombres" type="text" placeholder="Ej. Juan Pedro" class="form-control input-md" required="">                          
+                                    <input required id="nombres" name="nombres" value="{{abuelo.nombre}}" type="text" placeholder="Ej. Juan Pedro" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                             <div class="form-group">
                                 <label>Telefono</label>  
                                 <div class="col-md-6">
-                                    <input id="telefono" name="telefono"  type="text" placeholder="98765432" class="form-control input-md" required="">                          
+                                    <input required id="telefono" name="telefono" value="{{abuelo.telefono}}" type="text" placeholder="98765432" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                             <div class="form-group">
                                 <label>Fecha Nacimiento</label>  
                                 <div class="col-md-6">
-                                    <input id="fecha_nac" name="fecha_nac" type="date" class="form-control input-md" required="">                          
+                                    <input required id="fecha_nac" name="fecha_nac" value="{{abuelo.fechaNacimiento}}" type="date" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                             <div class="form-group">
                                 <label>Dirección</label>  
                                 <div class="col-md-6">
-                                    <input id="direcicon" name="direccion" type="text" class="form-control input-md" required="">                          
+                                    <input required id="direcicon" name="direccion" value="{{abuelo.direccion}}" type="text" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <label>Contraseña</label>
                                     <div class="col-md-6">
-                                        <input id="password" name="contrasenia" type="password"  class="form-control input-md" required="">
+                                        <input required id="password" name="contrasenia" type="password"  class="form-control input-md" required="">
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                         <div class="col-md-6">
                             <label>Foto</label>
                                 <div class="col-md-6">
-                                    <input id="foto" name="foto" class="input-file" type="file">
+                                    <input required id="foto" name="foto" value="{{abuelo.foto}}" class="input-file" type="file">
                                 </div>
                         </div>                                        
                     </div>
@@ -122,7 +122,7 @@
                             <div class="form-group">
                                 <label></label>
                                 <div class="col-md-6">
-                                    <button id="guardar" name="guardar" class="form-control btn btn-primary">Crear</button>
+                                    <button id="guardar" name="guardar" class="form-control btn btn-primary">Editar</button>
                                 </div>
                             </div>
                         </div>                                                

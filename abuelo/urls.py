@@ -10,7 +10,9 @@ urlpatterns = [
     path('cuidador/registrar', views.registrar, name="registrar"),
     path('abuelos',views.abuelos, name = "abuelos"),
     path('abuelos/crear', views.crear_abuelo, name="crear_abuelo"),
+    path('abuelos/editar/<int:id>', views.editar_abuelo, name = "editar_abuelo"),
+    path('abuelos/editado/<int:id>', views.editado_abuelo, name = "editado_abuelo"),
+    path('abuelos/eliminar/<int:id>', views.eliminar_abuelo, name = "eliminar_abuelo"),
     path('abuelos/save', views.crear_abuelo_save, name="crear_abuelo_save"),
     path('perfil/', views.perfil, name="perfil")
-
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

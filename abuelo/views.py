@@ -67,7 +67,7 @@ def abuelos(request):
 
 
 def crear_abuelo(request):
-    return render(request, 'crear_abuelo.html')
+    return render(request, 'crear_abuelo.html', {'titulo':'Crear Abuelo'})
 
 def crear_abuelo_save(request):
 
@@ -89,13 +89,44 @@ def crear_abuelo_save(request):
         abuelo = Abuelo(cuidador=cuidador, run=run, nombre=nombre, fechaNacimiento=fechaNacimiento, telefono=telefono,  direccion=direccion, contrasenia= contrasenia, foto=foto)
         abuelo.save()
         messages.success(request, 'El usuario fue registrado correctamente.123')
-        return render(request,'abuelos.html')
+        return redirect('abuelos')
     else:    
         messages.warning(request, 'El usuario ingresado ya esta registrado. 123')
-        return render(request,'abuelos.html')
+        return redirect('abuelos')
+
+def editar_abuelo(request,id):
+    abuelo = Abuelo.objects.get(pk=id)
+    return render(request, 'editar_abuelo.html', {'abuelo':abuelo,'titulo':'Editar Abuelo'})
     
 def perfil(request):
     id = request.session.get('id',None)
     cuidador = Cuidador.objects.get(pk=id)
     
     return render(request, 'perfil.html', {'cuidador': cuidador})
+
+def editado_abuelo(request,id):
+    abuelo = Abuelo.objects.get(pk=id)
+
+    run = request.POST.get('rut','')
+    nombre = request.POST.get('nombres','')
+    fechaNacimiento = request.POST.get('fecha_nac','')
+    telefono = request.POST.get('telefono','')
+    direccion = request.POST.get('direccion','')
+    contrasenia = request.POST.get('contrasenia','')
+    foto = request.FILES.get('foto', False)    
+
+    abuelo.run = run
+    abuelo.nombre = nombre
+    abuelo.fechaNacimiento = fechaNacimiento
+    abuelo.telefono = telefono
+    abuelo.direccion = direccion
+    abuelo.contrasenia = contrasenia
+    abuelo.foto = foto
+    abuelo.save()
+
+    return redirect('abuelos')
+
+def eliminar_abuelo(request,id):
+    abuelo = Abuelo.objects.get(pk = id)
+    abuelo.delete()
+    return redirect('abuelos')
