@@ -54,7 +54,7 @@ def login_iniciar(request):
         request.session['rut'] = cuidador[0].run
         #request.session['usuario'] = cuidador.first_name+" "+cuidador.last_name
 
-        abuelos = Abuelo.objects.filter(abuelo_id = cuidador[0].id)
+        abuelos = Abuelo.objects.filter(cuidador_id = cuidador[0].id)
         usuario = request.session.get('usuario',None)
         return render(request, 'abuelos.html', {'abuelos':abuelos,'usuario':usuario})
         #return redirect('abuelos')
