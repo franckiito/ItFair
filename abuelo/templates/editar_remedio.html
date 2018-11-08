@@ -38,10 +38,10 @@
               
         <div class="container">
             <div class="jumbotron">
-                <form action="/remedio/creado/{{abuelo.id}}" method="POST">
+                <form action="/remedio/editado/{{remedio.id}}" method="POST">
                     {% csrf_token %}
                     <fieldset>
-                        <h1>Crear Remedio</h1>
+                        <h1>Editar Remedio</h1>
                     </fieldset>
                     <hr/>
                     <div class="row">
@@ -49,7 +49,7 @@
                             <div class="form-group">
                                 <label>Nombre</label>
                                 <div class="col-md-6">
-                                    <input id="nombre" name="nombre" type="text" placeholder="Ingrese nombre" class="form-control input-md" required="">                          
+                                    <input required id="nombre" value="{{remedio.nombre}}" name="nombre" type="text" placeholder="Ingrese nombre" class="form-control input-md" >                          
                                 </div>
                             </div>
                         </div>   
@@ -57,7 +57,7 @@
                             <div class="form-group">
                                 <label>Descripcion</label>  
                                 <div class="col-md-6">
-                                    <input id="descripcion" name="descripcion" type="text" placeholder="Ingrese descripcion" class="form-control input-md" required="">                          
+                                    <input required id="descripcion" value="{{remedio.descripcion}}" name="descripcion" type="text" placeholder="Ingrese descripcion" class="form-control input-md" >                          
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                             <div class="form-group">
                                 <label>Tratamiento</label>  
                                 <div class="col-md-6">
-                                    <input id="tratamiento" name="tratamiento"  type="text" placeholder="Ingrese tratamiento del remedio" class="form-control input-md" required="">                          
+                                    <input required id="tratamiento" value="{{remedio.tratamiento}}" name="tratamiento"  type="text" placeholder="Ingrese tratamiento del remedio" class="form-control input-md" >                          
                                 </div>
                             </div>
                         </div>    
@@ -76,7 +76,7 @@
                             <div class="form-group">
                                 <label>Hora Inicio Remedio</label>  
                                 <div class="col-md-6">
-                                    <input id="horaInicio" name="horaInicio" type="number" class="form-control input-md" required="">                          
+                                    <input required id="horaInicio" value="{{remedio.horaInicio}}" name="horaInicio" type="number" class="form-control input-md" >                          
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                             <div class="form-group">
                             <label>Veces al día</label>  
                                 <div class="col-md-6">
-                                    <input id="cantVeces" name="cantVeces" type="text" placeholder="Ingrese cantidad de veces" class="form-control input-md" required="">                          
+                                    <input required id="cantVeces" value="{{remedio.cantVeces}}" name="cantVeces" type="text" placeholder="Ingrese cantidad de veces" class="form-control input-md" >                          
                                 </div>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                             <div class="form-group">
                                 <label></label>
                                 <div class="col-md-6">
-                                    <button id="guardar" name="guardar" class="form-control btn btn-primary">Crear</button>
+                                    <button id="editar" name="editar" class="form-control btn btn-primary">Editar</button>
                                 </div>
                             </div>
                         </div>                                                
