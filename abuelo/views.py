@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from .models import Cuidador
-from .models import Abuelo
 from .models import Remedio
+from .models import Abuelo
 from django.contrib import messages
 
 #importar user
@@ -39,35 +39,28 @@ def registrar(request):
         messages.warning(request, 'El usuario ingresado ya esta registrado. 123')
         return render(request,'index.html',{'mensaje':'El usuario ingresado ya esta registrado.'})
 
-def editar_cuidador(request,id):
-    cuidador = Cuidador.objects.get(pk=id)
-
+def login_iniciar(request):
     run = request.POST.get('run','')
-    nombre = request.POST.get('nombre','')
-    fechaNacimiento = request.POST.get('fechaNacimiento','')
-    correo = request.POST.get('correo','')
-    telefono = request.POST.get('telefono','')
-    direccion = request.POST.get('direccion','')
     contrasenia = request.POST.get('contrasenia','')
-
-    cuidador.run = run
-    cuidador.nombre = nombre
-    cuidador.fechaNacimiento = fechaNacimiento
-    cuidador.correo = correo
-    cuidador.telefono = telefono
-    cuidador.direccion = direccion
-    cuidador.contrasenia = contrasenia
-
-    cuidador.save()
-    return redirect('abuelos')
-
-
-def perfil(request):
-    usuario = request.session.get('usuario',None)
-    id = request.session.get('id',None)
-    cuidador = Cuidador.objects.get(pk=id)
     
-    return render(request, 'perfil.html', {'cuidador': cuidador,'usuario':usuario})
+    #cuidador = authenticate(request,username=run, password=contrasenia)
+    #print(cuidador)
+    cuidador = Cuidador.objects.filter(run=run).filter(contrasenia=contrasenia)
+    print(cuidador)
+    if cuidador is not None:
+        #auth_login(request, cuidador)
+        request.session['usuario'] = cuidador[0].nombre  
+        request.session['id'] = cuidador[0].id
+        request.session['rut'] = cuidador[0].run
+        #request.session['usuario'] = cuidador.first_name+" "+cuidador.last_name
+        return redirect('abuelos')
+    else:
+        messages.warning(request, 'Las credenciales son incorrectas.')
+        return render(request,'index.html',{'mensaje':'Las credenciales son incorrectas.'})
+
+def cerrar_session(request):
+    del request.session['usuario']
+    return redirect('index')
 
 def abuelos(request):
     usuario = request.session.get('usuario',None)
@@ -75,8 +68,7 @@ def abuelos(request):
 
 
 def crear_abuelo(request):
-    usuario = request.session.get('usuario',None)
-    return render(request, 'crear_abuelo.html', {'titulo':'Crear Abuelo','usuario':usuario})
+    return render(request, 'crear_abuelo.html', {'titulo':'Crear Abuelo'})
 
 def crear_abuelo_save(request):
 
@@ -104,9 +96,46 @@ def crear_abuelo_save(request):
         return redirect('abuelos')
 
 def editar_abuelo(request,id):
-    usuario = request.session.get('usuario',None)
     abuelo = Abuelo.objects.get(pk=id)
-    return render(request, 'editar_abuelo.html', {'abuelo':abuelo,'titulo':'Editar Abuelo','usuario':usuario})
+    return render(request, 'editar_abuelo.html', {'abuelo':abuelo,'titulo':'Editar Abuelo'})
+    
+def perfil(request):
+    id = request.session.get('id',None)
+    cuidador = Cuidador.objects.get(pk=id)
+    
+    return render(request, 'perfil.html', {'cuidador': cuidador})
+
+def editar_cuidador(request, id):
+    
+    run = request.POST.get('run','')
+    nombre = request.POST.get('nombre','')
+    fechaNacimiento = request.POST.get('fechaNacimiento','')
+    correo = request.POST.get('correo','')
+    telefono = request.POST.get('telefono','')
+    direccion = request.POST.get('direccion','')
+    contrasenia = request.POST.get('contrasenia','')
+
+    foto = request.FILES.get('foto', False) 
+
+    cuidador = Cuidador.objects.get(pk=id)
+    cuidador.nombre = nombre
+    cuidador.fechaNacimiento = fechaNacimiento
+    cuidador.correo = correo
+    cuidador.telefono = telefono
+    cuidador.direccion = direccion
+    
+    if contrasenia != "" :
+        cuidador.contrasenia = contrasenia            
+
+    if foto != False :
+        cuidador.foto = foto    
+
+    if cuidador.save() :
+        messages.success(request, 'El usuario ha sido actualizado, correctamente')        
+        return redirect('abuelos',{'mensaje':'El usuario fue registrado correctamente.'})
+    else:    
+        messages.warning(request, 'Favor, intente más tarde')
+        return redirect('abuelos',{'mensaje':'Favor, intente más tarde.'})
 
 def editado_abuelo(request,id):
     abuelo = Abuelo.objects.get(pk=id)
@@ -117,15 +146,20 @@ def editado_abuelo(request,id):
     telefono = request.POST.get('telefono','')
     direccion = request.POST.get('direccion','')
     contrasenia = request.POST.get('contrasenia','')
-    foto = request.FILES.get('foto', False)    
+    foto = request.FILES.get('foto', False)
 
     abuelo.run = run
     abuelo.nombre = nombre
     abuelo.fechaNacimiento = fechaNacimiento
     abuelo.telefono = telefono
     abuelo.direccion = direccion
-    abuelo.contrasenia = contrasenia
-    abuelo.foto = foto
+
+    if contrasenia != "" :        
+        abuelo.contrasenia = contrasenia
+    
+    if foto != False : 
+        abuelo.foto = foto
+
     abuelo.save()
 
     return redirect('abuelos')
@@ -135,62 +169,6 @@ def eliminar_abuelo(request,id):
     abuelo.delete()
     return redirect('abuelos')
 
-def remedio(request,id):
-    abuelo = Abuelo.objects.get(pk=id)
-
-    try:
-        remedios = Remedio.objects.filter(abuelo=id)
-    except:
-        remedios = []
-    usuario = request.session.get('usuario',None)
-    return render(request, 'remedio.html', {'abuelo':abuelo,'usuario':usuario, 'remedios':remedios})
-
-def crear_remedio(request,id):
-    abuelo = Abuelo.objects.get(pk=id)
-    usuario = request.session.get('usuario',None)
-    print(id)
-    print(abuelo)
-    return render(request, 'crear_remedio.html', {'abuelo':abuelo,'usuario':usuario})
-
-def creado_remedio(request,id):
-    abuelo = Abuelo.objects.get(pk=id)
-    nombre = request.POST.get('nombre','')
-    descripcion = request.POST.get('fechaNacimiento','')
-    tratamiento = request.POST.get('correo','')
-    horaInicio = request.POST.get('telefono','')
-    cantVeces = request.POST.get('direccion','')
-
-    remedio = Remedio(nombre=nombre, descripcion=descripcion, tratamiento=tratamiento, horaInicio=horaInicio, cantVeces=cantVeces, abuelo=abuelo)
-    remedio.save()
-    return redirect('abuelos')
-
-def editar_remedio(request,id):
-
-    return redirect('abuelos')
-
-def eliminar_remedio(request,id):
-
-    return redirect('abuelos')
-
-def login_iniciar(request):
-    run = request.POST.get('run','')
-    contrasenia = request.POST.get('contrasenia','')
-    
-    #cuidador = authenticate(request,username=run, password=contrasenia)
-    #print(cuidador)
-    cuidador = Cuidador.objects.filter(run=run).filter(contrasenia=contrasenia)
-    print(cuidador)
-    if cuidador is not None:
-        #auth_login(request, cuidador)
-        request.session['usuario'] = cuidador[0].nombre  
-        request.session['id'] = cuidador[0].id
-        request.session['rut'] = cuidador[0].run
-        #request.session['usuario'] = cuidador.first_name+" "+cuidador.last_name
-        return redirect('abuelos')
-    else:
-        messages.warning(request, 'Las credenciales son incorrectas.')
-        return render(request,'index.html',{'mensaje':'Las credenciales son incorrectas.'})
-
-def cerrar_session(request):
-    del request.session['usuario']
-    return redirect('index')
+def remedio(request, id):
+    remedios = Remedio.objects.filter(abuelo=id)
+    return redirect('remedio', {'remedios': remedios})

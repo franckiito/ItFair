@@ -41,16 +41,23 @@
             <div class="jumbotron">
                 <form action="/abuelos/editado/{{abuelo.id}}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <fieldset>
-                        <h1>{{titulo}}</h1>
-                    </fieldset>
+                    <div class="row">
+                        <div class="col-sm">
+                            <h1>{{titulo}}</h1>
+                        </div>
+                        <div class="col-sm"></div>
+                        <div class="col-sm">
+                            <img src="/media/{{abuelo.foto}}" />
+                        </div>
+                    </div>  
+                    
                     <hr/>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Run</label>
                                 <div class="col-md-6">
-                                    <input id="rut" name="rut" enable="false" value="{{abuelo.run}}" type="text" placeholder="Ej. 16863353K" class="form-control input-md" required="">                          
+                                    <input disabled id="rut" name="rut" enable="false" value="{{abuelo.run}}" type="text" placeholder="Ej. 16863353K" class="form-control input-md" required="">                          
                                 </div>
                             </div>
                         </div>
@@ -101,7 +108,7 @@
                                 <div class="form-group">
                                     <label>Contraseña</label>
                                     <div class="col-md-6">
-                                        <input required id="password" name="contrasenia" type="password"  class="form-control input-md" required="">
+                                        <input id="password" name="contrasenia" type="password"  class="form-control input-md">
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +119,7 @@
                         <div class="col-md-6">
                             <label>Foto</label>
                                 <div class="col-md-6">
-                                    <input required id="foto" name="foto" value="{{abuelo.foto}}" class="input-file" type="file">
+                                    <input id="foto" name="foto" value="{{abuelo.foto}}" class="input-file" type="file">
                                 </div>
                         </div>                                        
                     </div>
