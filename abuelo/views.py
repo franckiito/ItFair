@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from .models import Cuidador
 from .models import Remedio
 from .models import Abuelo
+from .models import Alarma
 from django.contrib import messages
 
 #importar user
@@ -198,8 +199,25 @@ def creado_remedio(request, id):
         
         remedio = Remedio(nombre=nombre, descripcion=descripcion, tratamiento=tratamiento, horaInicio=horaInicio, cantVeces=cantVeces,  abuelo=abuelo)
         remedio.save()
+
+        crear_alarmas(horaInicio, cantVeces,remedio.id)
         messages.success(request, 'El Remedio fue registrado correctamente.')
         return render(request, 'remedio.html', {'remedios': remedios, 'usuario' : usuario, 'abuelo': abuelo})
     else:    
         messages.warning(request, 'El usuario ingresado ya esta registrado. 123')
         return render(request, 'remedio.html', {'remedios': remedios, 'usuario' : usuario, 'abuelo': abuelo})    
+
+def crear_alarmas(horaInicio, cantVeces, remedio_id):
+    rango_horas = 24
+
+    print (cantVeces)
+    cantidad = 24 // int(cantVeces)
+
+    for x in range(0, cantidad):      
+        if(int(horaInicio) > 23):
+            horaInicio = int(horaInicio) - 24
+        remedio = Alarma(hora=horaInicio, remedio_id=remedio_id)
+        remedio.save()
+        
+        horaInicio = int(horaInicio) + int(cantVeces)
+    return "ok"

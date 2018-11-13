@@ -77,9 +77,9 @@
                         
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Hora Inicio Remedio</label>  
+                                <label>Hora Inicio Remedio 0 a 23 hrs</label>
                                 <div class="col-md-6">
-                                    <input id="horaInicio" name="horaInicio" type="number" class="form-control input-md" required="">                          
+                                    <input id="horaInicio" name="horaInicio" type="number" class="form-control input-md" required="" max="23">                          
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,12 @@
                             <div class="form-group">
                                 <label>Veces al día</label>  
                                 <div class="col-md-6">
-                                    <input id="cantVeces" name="cantVeces" type="text" placeholder="Ingrese cantidad de veces" class="form-control input-md" required="">                          
+                                    <select id="cantVeces"name="cantVeces" type="text" placeholder="Ingrese cantidad de veces" class="form-control input-md" required="">
+                                        <option value="4">4</option>
+                                        <option value="6">6</option>
+                                        <option value="8">8</option>
+                                        <option value="12">12</option>
+                                    </select>                                
                                 </div>
                             </div>
                         </div>
