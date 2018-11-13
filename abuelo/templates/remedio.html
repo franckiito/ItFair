@@ -55,17 +55,19 @@
                         <th scope="col">Tratamiento</th>
                         <th scope="col">Hora inicio</th>
                         <th scope="col">Cantidad Veces</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for elemento in remedios %}
                         <tr>
-                            <th scope="col">{{abuelo.run}}</th>
+                            <th scope="col">Remedio {{elemento.id}}</th>
                             <td>{{elemento.nombre}}</td>
                             <td>{{elemento.descripcion}}</td>
                             <td>{{elemento.tratamiento}}</td>
                             <td>{{elemento.horaInicio}}</td>
                             <td>{{elemento.cantVeces}}</td>
+                            <td><a href="/remedio/editar/{{elemento.id}}">Editar</a> <a href="/remedio/eliminar/{{elemento.id}}">Eliminar</a></td>
                         </tr>                                                
                     {% endfor %}
                 </tbody>

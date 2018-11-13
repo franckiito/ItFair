@@ -54,7 +54,11 @@ def login_iniciar(request):
         request.session['id'] = cuidador[0].id
         request.session['rut'] = cuidador[0].run
         #request.session['usuario'] = cuidador.first_name+" "+cuidador.last_name
-        return redirect('abuelos')
+
+        abuelos = Abuelo.objects.filter(cuidador_id = cuidador[0].id)
+        usuario = request.session.get('usuario',None)
+        return render(request, 'abuelos.html', {'abuelos':abuelos,'usuario':usuario})
+        #return redirect('abuelos')
     else:
         messages.warning(request, 'Las credenciales son incorrectas.')
         return render(request,'index.html',{'mensaje':'Las credenciales son incorrectas.'})
@@ -90,10 +94,8 @@ def crear_abuelo_save(request):
         cuidador = Cuidador.objects.get(pk=id)
         abuelo = Abuelo(cuidador=cuidador, run=run, nombre=nombre, fechaNacimiento=fechaNacimiento, telefono=telefono,  direccion=direccion, contrasenia= contrasenia, foto=foto)
         abuelo.save()
-        messages.success(request, 'El usuario fue registrado correctamente.123')
         return redirect('abuelos')
     else:    
-        messages.warning(request, 'El usuario ingresado ya esta registrado. 123')
         return redirect('abuelos')
 
 def editar_abuelo(request,id):
@@ -104,8 +106,9 @@ def editar_abuelo(request,id):
 def perfil(request):
     id = request.session.get('id',None)
     cuidador = Cuidador.objects.get(pk=id)
+    usuario = request.session.get('usuario',None)
     
-    return render(request, 'perfil.html', {'cuidador': cuidador})
+    return render(request, 'perfil.html', {'cuidador': cuidador,'usuario':usuario})
 
 def editar_cuidador(request, id):
     
@@ -132,11 +135,9 @@ def editar_cuidador(request, id):
     if foto != False :
         cuidador.foto = foto    
 
-    if cuidador.save() :
-        messages.success(request, 'El usuario ha sido actualizado, correctamente')        
+    if cuidador.save() : 
         return redirect('abuelos',{'mensaje':'El usuario fue registrado correctamente.'})
     else:    
-        messages.warning(request, 'Favor, intente más tarde')
         return redirect('abuelos',{'mensaje':'Favor, intente más tarde.'})
 
 def editado_abuelo(request,id):
@@ -179,7 +180,8 @@ def remedio(request, id):
 
 def crear_remedio(request, id):
     abuelo = Abuelo.objects.get(pk = id)
-    return render(request, 'crear_remedio.html', {'abuelo': abuelo})
+    usuario = request.session.get('usuario',None)
+    return render(request, 'crear_remedio.html', {'abuelo': abuelo,'usuario':usuario})
 
 def creado_remedio(request, id):
 
@@ -196,10 +198,9 @@ def creado_remedio(request, id):
     remedios = Remedio.objects.filter(abuelo_id = id)
     
     if len(remedio) == 0 : 
-        
         remedio = Remedio(nombre=nombre, descripcion=descripcion, tratamiento=tratamiento, horaInicio=horaInicio, cantVeces=cantVeces,  abuelo=abuelo)
         remedio.save()
-
+        
         crear_alarmas(horaInicio, cantVeces,remedio.id)
         messages.success(request, 'El Remedio fue registrado correctamente.')
         return render(request, 'remedio.html', {'remedios': remedios, 'usuario' : usuario, 'abuelo': abuelo})
@@ -220,4 +221,42 @@ def crear_alarmas(horaInicio, cantVeces, remedio_id):
         remedio.save()
         
         horaInicio = int(horaInicio) + int(cantVeces)
-    return "ok"
+    return "ok"        
+
+def editar_remedio(request, id):
+    remedio = Remedio.objects.get(pk = id)
+    usuario = request.session.get('usuario',None)
+    return render(request, 'editar_remedio.html', {'remedio': remedio,'usuario':usuario})
+    
+def editado_remedio(request, id):
+    remedio = Remedio.objects.get(pk = id)
+    abuelo = remedio.abuelo
+    usuario = request.session.get('usuario',None)
+
+    nombre = request.POST.get('nombre','')
+    descripcion = request.POST.get('descripcion','')
+    tratamiento = request.POST.get('tratamiento','')
+    horaInicio = request.POST.get('horaInicio','')
+    cantVeces = request.POST.get('cantVeces','')
+    
+    remedio.nombre = nombre
+    remedio.descripcion = descripcion
+    remedio.tratamiento = tratamiento
+    remedio.horaInicio = horaInicio
+    remedio.cantVeces = cantVeces
+    
+    remedio.save()
+
+    remedios = Remedio.objects.filter(abuelo_id = abuelo.id)
+    return render(request, 'remedio.html', {'remedios': remedios, 'usuario' : usuario, 'abuelo': abuelo})
+
+def eliminar_remedio(request, id):
+    remedio = Remedio.objects.get(pk = id)
+    abuelo = remedio.abuelo
+
+    remedio.delete()
+
+    usuario = request.session.get('usuario',None)
+    remedios = Remedio.objects.filter(abuelo_id = abuelo.id)
+
+    return render(request, 'remedio.html', {'usuario':usuario,'abuelo':abuelo,'remedios': remedios})
