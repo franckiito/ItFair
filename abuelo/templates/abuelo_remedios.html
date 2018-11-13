@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        {% load static %}
+
+        <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css" >
+        <link rel="stylesheet" href="{% static "css/all.css" %}"  type="text/css">
+        <link rel="stylesheet" href="{% static "css/estilo.css" %}" type="text/css">
+
+        <title>Help Memory</title>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                    <!--  Remove dark nav  -->
+                <nav class="nav dark-nav fixed-top">
+                    <div class="container">
+                        <div class="nav-heading">
+                            <button class="toggle-nav" data-toggle="open-navbar1"><i class="fa fa-align-right"></i></button>
+                            <a class="brand" href="#">ItFair</a>
+                        </div>
+                        <div class="menu" id="open-navbar1">
+                            <ul class="list">
+                            <li><a href="/perfil">Bienvenid@, {{usuario}} </a></li>                    
+                            <li><a href="{% url "cerrar_session" %}">Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <div class="container">   
+                <div class="jumbotron">
+                    <h1 class="display-4">Hola! {{usuario}}</h1>
+                    <p class="lead">Este es el sitio de administración, acá podrás gestionar y ver el comportamiento de sus abuelitos :)!</p>
+                    <hr class="my-4">                    
+                </div>                
+            </div>    
+            <br/> 
+        </div>        
+
+              
+        <form action="abuelo/remedios/{{abuelo.id}}/{{alarma.id}}" method="POST">
+            {% csrf_token %}
+            <div class="container">
+                    <button type="submit" id="start" class="btn-primary">Start</button>
+                    <button id="stop" class="btn-danger">Stop</button>
+                </div>          
+        </form>
+        
+
+        <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static "js/jquery-3.3.1.js" %}"></script>
+    <script src="{% static "js/popper.js" %}"></script>
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <script src="{% static "js/jquery.validate.js" %}"></script>
+    <script src="{% static "js/jquery.Rut.js" %}"></script>
+    <script src="{% static "js/app.js" %}"></script>
+    <script src="{% static "js/playsound.js" %}"></script>    
+    <script type="text/javascript">
+
+        window.setInterval(function(){
+            /// call your function here      
+            $('#start').trigger('click');
+            console.log("Es hora de alarma :)");
+            //$.playSound("/static/sounds/alarma1.mp3");
+        }, 5000);
+    </script>
+  </body>
+</html>

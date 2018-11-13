@@ -41,9 +41,15 @@
             <div class="jumbotron">
                 <form action="/perfil/editar/{{cuidador.id}}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <fieldset>
-                        <h1>Editar datos</h1>
-                    </fieldset>
+                    <div class="row">
+                        <div class="col-sm">
+                            <h1>Editar Datos</h1>
+                        </div>
+                        <div class="col-sm"></div>
+                        <div class="col-sm">
+                            <img src="/media/{{cuidador.foto}}" />
+                        </div>
+                    </div>
                     <hr/>
                     <div class="row">
                         <div class="col-md-6">

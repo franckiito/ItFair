@@ -366,3 +366,11 @@ $(function () {
       });
     }());
   });
+
+  $("#start").on("click",function () {
+    $.playSound("/static/sounds/alarma1.mp3")
+})
+
+$("#stop").on("click",function () {
+    $.stopSound();
+})

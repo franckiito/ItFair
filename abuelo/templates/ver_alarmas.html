@@ -35,11 +35,8 @@
             </header>    
             <div class="container">   
                 <div class="jumbotron">
-                    <h1 class="display-4">Remedios de {{abuelo.nombre}}</h1>
-                    <p class="lead">En este sitio podra administrar y gestionar los remedios</p>
-                    <hr class="my-4">
-                    <p>Presione el siguiente botón para agregar un nuevo remedio.</p>
-                    <a class="btn btn-primary" href="/remedio/crear/{{abuelo.id}}" role="button">Registrar nuevo</a>                    
+                    <h1 class="display-4">Alarmas de {{abuelo.nombre}}</h1>
+                    <p class="lead">En este sitio podra administrar y gestionar los remedios</p>                    
                 </div>                
             </div>    
             <br/>         
@@ -48,26 +45,16 @@
         <div class="container">
             <table class="table table-striped">
                 <thead>
-                    <tr>                        
-                        <th scope="col">Nombre Remedio</th>
-                        <th scope="col">Descripcion</th>
-                        <th scope="col">Tratamiento</th>
-                        <th scope="col">Hora inicio</th>
-                        <th scope="col">Intervalo de horas</th>
-                        <th scope="col">Alarmas</th>
-                        <th scope="col">Acciones</th>                        
+                    <tr>                                            
+                        <th scope="col">Remedio</th>                                              
+                        <th scope="col">Hora</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for elemento in remedios %}
+                    {% for elemento in alarmas %}
                         <tr>                            
-                            <td>{{elemento.nombre}}</td>
-                            <td>{{elemento.descripcion}}</td>
-                            <td>{{elemento.tratamiento}}</td>
-                            <td>{{elemento.horaInicio}} : 00 hrs</td>
-                            <td>Cada {{elemento.cantVeces}} hrs</td>
-                            <td><a href="/remedio/alarmas/{{elemento.id}}">Ver</a></td>
-                            <td><a href="/remedio/editar/{{elemento.id}}">Editar</a> <a href="/remedio/eliminar/{{elemento.id}}">Eliminar</a></td>
+                            <td>{{elemento.remedio.nombre}}</td>                            
+                            <td>{{elemento.hora}} : 00 hrs</td>
                         </tr>                                                
                     {% endfor %}
                 </tbody>
