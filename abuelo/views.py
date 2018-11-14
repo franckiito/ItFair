@@ -2,13 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
-from datetime import datetime
 from .models import Cuidador
 from .models import Remedio
 from .models import Abuelo
 from .models import Alarma
 from .models import Historial
 from django.contrib import messages
+from django.http import JsonResponse
 
 #importar user
 from django.contrib.auth.models import User
@@ -23,10 +23,12 @@ def index(request):
     return render(request,'index.html')
 
 def registrar(request):
+    print("ajax request")
     run = request.POST.get('run','')
     nombre = request.POST.get('nombre','')
     fechaNacimiento = request.POST.get('fechaNacimiento','')
     correo = request.POST.get('correo','')
+    print("ajax request correo")
     telefono = request.POST.get('telefono','')
     direccion = request.POST.get('direccion','')
     contrasenia = request.POST.get('contrasenia','')
@@ -36,11 +38,23 @@ def registrar(request):
     if len(cuidador) == 0 :
         cuidador = Cuidador(run=run, nombre=nombre, fechaNacimiento=fechaNacimiento, correo=correo, telefono=telefono,  direccion=direccion, contrasenia= contrasenia)                
         cuidador.save()
-        messages.success(request, 'El usuario fue registrado correctamente.123')
-        return render(request,'index.html',{'mensaje':'El usuario fue registrado correctamente.'})
-    else:    
-        messages.warning(request, 'El usuario ingresado ya esta registrado. 123')
-        return render(request,'index.html',{'mensaje':'El usuario ingresado ya esta registrado.'})
+
+        data = {
+        'mensaje': 'El usuario fue registrado correctamente.',
+        'type' : 'success',
+        'tittle': 'Registro exitoso!'
+        }
+        
+        return JsonResponse(data)
+        #return render(request,'index.html',{'mensaje':'El usuario fue registrado correctamente.'})
+    else:
+        data = {
+        'mensaje': 'El usuario ingresado ya esta registrado.',
+        'type' : 'error',
+        'tittle': 'Error!'
+        }
+        return JsonResponse(data)
+        #return render(request,'index.html',{'mensaje':'El usuario ingresado ya esta registrado.'})
 
 def login_iniciar(request):
     run = request.POST.get('run','')
@@ -291,13 +305,13 @@ def ver_alarmas(request, id):
     usuario = request.session.get('usuario',None)
     return render(request, 'ver_alarmas.html', {'alarmas': alarmas, 'usuario': usuario, 'abuelo': abuelo})
 
-def registrar_consumo_remedio(request, abuelo_id, alarma_id):
-    abuelo_id = request.POST.get('abuelo_id','')
-    alarma_id = request.POST.get('alarma_id','')
-    estado = request.POST.get('estado','')
+#def registrar_consumo_remedio(request, abuelo_id, alarma_id):
+#    abuelo_id = request.POST.get('abuelo_id','')
+#    alarma_id = request.POST.get('alarma_id','')
+#    estado = request.POST.get('estado','')
         
-    fecha_ahora = datetime.strptime(datetime.now(), "%d-%b-%Y %H:%M:%S")
-    historial = Historial(estado = estado, fecha = fecha_ahora, abuelo_id = abuelo_id, alarma_id=alarma_id)
-    historial.save()
+    #fecha_ahora = datetime.strptime(datetime.now(), "%d-%b-%Y %H:%M:%S")
+    #historial = Historial(estado = estado, fecha = fecha_ahora, abuelo_id = abuelo_id, alarma_id=alarma_id)
+    #historial.save()
     
-    return redirect('abuelos_remedios')
+#    return redirect('abuelos_remedios')

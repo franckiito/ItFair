@@ -23,6 +23,6 @@ urlpatterns = [
     path('remedio/editado/<int:id>', views.editado_remedio, name = "editado_remedio"),
     path('remedio/eliminar/<int:id>', views.eliminar_remedio, name = "eliminar_remedio"),
     path('abuelo/remedios/', views.abuelo_remedios, name = "abuelo_remedios"),
-    path('abuelo/registrar/<int:id>/<int:id>', views.registrar_consumo_remedio, name= "registrar_consumo_remedio"),
+    #path('abuelo/registrar/<int:id>/<int:id>', views.registrar_consumo_remedio, name= "registrar_consumo_remedio"),
     path('remedio/alarmas/<int:id>', views.ver_alarmas, name = "ver_alarmas")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
