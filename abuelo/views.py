@@ -85,7 +85,7 @@ def login_iniciar(request):
 
             usuario = request.session.get('usuario',None)
             
-            return render(request, 'abuelo_remedios.html', {'usuario':usuario})
+            return redirect('abuelo_remedios')
         else :
             messages.warning(request, 'Las credenciales son incorrectas.')
             return render(request,'index.html',{'mensaje':'Las credenciales son incorrectas.'})
@@ -120,7 +120,7 @@ def crear_abuelo_save(request):
     abuelo = Abuelo.objects.filter(run=run)
 
     if len(abuelo) == 0 : 
-        id = request.session.get('id',None)        
+        id = request.session.get('id',None)
         cuidador = Cuidador.objects.get(pk=id)
         abuelo = Abuelo(cuidador=cuidador, run=run, nombre=nombre, fechaNacimiento=fechaNacimiento, telefono=telefono,  direccion=direccion, contrasenia= contrasenia, foto=foto)
         abuelo.save()
@@ -295,7 +295,17 @@ def eliminar_remedio(request, id):
     return render(request, 'remedio.html', {'usuario':usuario,'abuelo':abuelo,'remedios': remedios})
 
 def abuelo_remedios(request):
-    return render(request, 'abuelo_remedios.html')
+    usuario = request.session.get('usuario', None)
+    id = request.session.get('id', None)
+    
+    abuelo = Abuelo.objects.get(pk = id)    
+    remedios = Remedio.objects.filter(abuelo_id = abuelo.id)
+    alarmas = []
+
+    for x in range(0, len(remedios)):
+        alarmas.append(Alarma.objects.filter(remedio_id = remedios[x].id))
+
+    return render(request, 'abuelo_remedios.html', {'alarmas': alarmas, 'usuario': usuario, 'abuelo': abuelo})
 
 def ver_alarmas(request, id):
     alarmas = Alarma.objects.filter(remedio_id = id)

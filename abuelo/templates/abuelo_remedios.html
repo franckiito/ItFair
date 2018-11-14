@@ -36,12 +36,43 @@
             <div class="container">   
                 <div class="jumbotron">
                     <h1 class="display-4">Hola! {{usuario}}</h1>
-                    <p class="lead">Este es el sitio de administración, acá podrás gestionar y ver el comportamiento de sus abuelitos :)!</p>
+                    <p class="lead">No olvides tomar tus remedios :)!</p>
                     <hr class="my-4">                    
                 </div>                
-            </div>    
-            <br/> 
-        </div>        
+            </div>                
+            <br/>             
+        </div>    
+        
+        
+        <div class="container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>                                            
+                        <th scope="col">Remedio</th>                                              
+                        <th scope="col">Hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for elemento in alarmas %}
+                        {% for e in elemento %}
+                            <tr>                            
+                                <td>{{e.remedio.nombre}}</td>                            
+                                <td>{{e.hora}} : 00 hrs</td>
+                            </tr>                            
+                        {% endfor %}                        
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="div_alarmas">
+            {% for elemento in alarmas %}
+                {% for e in elemento %}         
+                    <input type="hidden" class="nombre_alarma" value="{{e.remedio.nombre}}" />
+                    <input type="hidden" class="alarmas" value="{{e.hora}}:12" />                                        
+                {% endfor %}                        
+            {% endfor %}
+        </div>
 
               
         <!--<form action="abuelo/remedios/{{abuelo.id}}/{{alarma.id}}" method="POST">
@@ -66,10 +97,23 @@
     <script src="{% static "js/playsound.js" %}"></script>    
     <script type="text/javascript">
 
+        var x = document.getElementsByClassName("alarmas");
+
         window.setInterval(function(){
             /// call your function here      
-            $('#start').trigger('click');
-            console.log("Es hora de alarma :)");
+            //
+            
+            var dt = new Date();
+            var time = dt.getHours() + ":" + dt.getMinutes();
+            console.log(time);
+
+            jQuery.each( x, function( i, val ) {
+                if(val.value == time) {
+                    console.log("Es hora de alarma :)");
+                    $('#start').trigger('click');
+                }                
+            });
+            
             //$.playSound("/static/sounds/alarma1.mp3");
         }, 5000);
     </script>
