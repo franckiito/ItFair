@@ -73,8 +73,16 @@ def login_iniciar(request):
 
         abuelos = Abuelo.objects.filter(cuidador_id = cuidador[0].id)
         usuario = request.session.get('usuario',None)
-        return render(request, 'abuelos.html', {'abuelos':abuelos,'usuario':usuario})
-        #return redirect('abuelos')
+        data = { 
+            'mensaje': 'Bienvenido!!!', 
+            'type' : 'success', 
+            'tittle': 'Inicio Sesión!', 
+            'tipo' : 'cuidador' 
+        } 
+         
+        return JsonResponse(data) 
+        #return render(request, 'abuelos.html', {'abuelos':abuelos,'usuario':usuario})
+        
     else:
         abuelo = Abuelo.objects.filter(run=run).filter(contrasenia=contrasenia)
 
@@ -85,10 +93,23 @@ def login_iniciar(request):
 
             usuario = request.session.get('usuario',None)
             
-            return redirect('abuelo_remedios')
+            data = { 
+                'mensaje': 'Bienvenido!!!', 
+                'type' : 'success', 
+                'tittle': 'Inicio Sesión!', 
+                'tipo' : 'abuelo' 
+            } 
+             
+            return JsonResponse(data) 
+            #return redirect('abuelo_remedios')
         else :
-            messages.warning(request, 'Las credenciales son incorrectas.')
-            return render(request,'index.html',{'mensaje':'Las credenciales son incorrectas.'})
+            data = { 
+            'mensaje': 'Las credenciales son incorrectas.', 
+            'type' : 'error', 
+            'tittle': 'Inicio Sesión!' 
+            } 
+            return JsonResponse(data) 
+            #return render(request,'index.html',{'mensaje':'Las credenciales son incorrectas.'})
 
 def cerrar_session(request):
     del request.session['usuario']
@@ -98,12 +119,12 @@ def abuelos(request):
     usuario = request.session.get('usuario',None)
     id = request.session.get('id',None)
 
-    print(id)
     return render(request, 'abuelos.html', {'abuelos':Abuelo.objects.all().filter(cuidador_id = id),'usuario':usuario})
 
 
 def crear_abuelo(request):
-    return render(request, 'crear_abuelo.html', {'titulo':'Crear Abuelo'})
+    usuario = request.session.get('usuario',None) 
+    return render(request, 'crear_abuelo.html', {'usuario':usuario})
 
 def crear_abuelo_save(request):
 
@@ -124,14 +145,26 @@ def crear_abuelo_save(request):
         cuidador = Cuidador.objects.get(pk=id)
         abuelo = Abuelo(cuidador=cuidador, run=run, nombre=nombre, fechaNacimiento=fechaNacimiento, telefono=telefono,  direccion=direccion, contrasenia= contrasenia, foto=foto)
         abuelo.save()
-        return redirect('abuelos')
+        data = { 
+            'mensaje': 'El abuelo fue registrado correctamente.', 
+            'type' : 'success', 
+            'tittle': 'Registro abuelo' 
+        } 
+        return JsonResponse(data) 
+        #return redirect('abuelos')
     else:    
-        return redirect('abuelos')
+        data = { 
+            'mensaje': 'Error al registrar abuelo. El rut ya existe.', 
+            'type' : 'error', 
+            'tittle': 'Registro abuelo' 
+        } 
+        return JsonResponse(data)
+        #return redirect('abuelos')
 
 def editar_abuelo(request,id):
     abuelo = Abuelo.objects.get(pk=id)
     usuario = request.session.get('usuario',None)
-    return render(request, 'editar_abuelo.html', {'abuelo':abuelo,'titulo':'Editar Abuelo', 'usuario' : usuario})
+    return render(request, 'editar_abuelo.html', {'abuelo':abuelo, 'usuario' : usuario})
     
 def perfil(request):
     id = request.session.get('id',None)
@@ -142,63 +175,99 @@ def perfil(request):
 
 def editar_cuidador(request, id):
     
-    run = request.POST.get('run','')
-    nombre = request.POST.get('nombre','')
-    fechaNacimiento = request.POST.get('fechaNacimiento','')
-    correo = request.POST.get('correo','')
-    telefono = request.POST.get('telefono','')
-    direccion = request.POST.get('direccion','')
-    contrasenia = request.POST.get('contrasenia','')
+    try:
+        run = request.POST.get('run','')
+        nombre = request.POST.get('nombre','')
+        fechaNacimiento = request.POST.get('fechaNacimiento','')
+        correo = request.POST.get('correo','')
+        telefono = request.POST.get('telefono','')
+        direccion = request.POST.get('direccion','')
+        contrasenia = request.POST.get('contrasenia','')
 
-    foto = request.FILES.get('foto', False) 
+        foto = request.FILES.get('foto', False) 
 
-    cuidador = Cuidador.objects.get(pk=id)
-    cuidador.nombre = nombre
-    cuidador.fechaNacimiento = fechaNacimiento
-    cuidador.correo = correo
-    cuidador.telefono = telefono
-    cuidador.direccion = direccion
-    
-    if contrasenia != "" :
-        cuidador.contrasenia = contrasenia            
+        cuidador = Cuidador.objects.get(pk=id)
+        cuidador.nombre = nombre
+        cuidador.fechaNacimiento = fechaNacimiento
+        cuidador.correo = correo
+        cuidador.telefono = telefono
+        cuidador.direccion = direccion
+        
+        if contrasenia != "" :
+            cuidador.contrasenia = contrasenia            
 
-    if foto != False :
-        cuidador.foto = foto    
+        if foto != False :
+            cuidador.foto = foto    
 
-    if cuidador.save() : 
-        return redirect('abuelos')
-    else:    
-        return redirect('abuelos')
+        cuidador.save() 
+        request.session['usuario'] = cuidador.nombre
+        data = { 
+            'mensaje': 'Los datos fueron editados correctamente.', 
+            'type' : 'success', 
+            'tittle': 'Editar perfil' 
+        } 
+        return JsonResponse(data)
+    except:
+        data = { 
+            'mensaje': 'Error al editar los datos.', 
+            'type' : 'success', 
+            'tittle': 'Editar perfil' 
+        } 
+        return JsonResponse(data)
+
 
 def editado_abuelo(request,id):
-    abuelo = Abuelo.objects.get(pk=id)
 
-    run = request.POST.get('rut','')
-    nombre = request.POST.get('nombres','')
-    fechaNacimiento = request.POST.get('fecha_nac','')
-    telefono = request.POST.get('telefono','')
-    direccion = request.POST.get('direccion','')
-    contrasenia = request.POST.get('contrasenia','')
-    foto = request.FILES.get('foto', False)
+    try:
+        abuelo = Abuelo.objects.get(pk=id)
+
+        run = request.POST.get('rut','')
+        nombre = request.POST.get('nombres','')
+        fechaNacimiento = request.POST.get('fecha_nac','')
+        telefono = request.POST.get('telefono','')
+        direccion = request.POST.get('direccion','')
+        contrasenia = request.POST.get('contrasenia','')
+        foto = request.FILES.get('foto', False)
+        
+        abuelo.nombre = nombre
+        abuelo.fechaNacimiento = fechaNacimiento
+        abuelo.telefono = telefono
+        abuelo.direccion = direccion
+
+        if contrasenia != "" :        
+            abuelo.contrasenia = contrasenia
+        
+        if foto != False : 
+            abuelo.foto = foto
+
     
-    abuelo.nombre = nombre
-    abuelo.fechaNacimiento = fechaNacimiento
-    abuelo.telefono = telefono
-    abuelo.direccion = direccion
+        abuelo.save()
+        data = { 
+            'mensaje': 'El abuelo fue editar correctamente.', 
+            'type' : 'success', 
+            'tittle': 'Editar abuelo' 
+        } 
+        return JsonResponse(data)
+    except:
+        data = { 
+            'mensaje': 'Error al editar abuelo.', 
+            'type' : 'success', 
+            'tittle': 'Editar abuelo' 
+        } 
+        return JsonResponse(data)
 
-    if contrasenia != "" :        
-        abuelo.contrasenia = contrasenia
-    
-    if foto != False : 
-        abuelo.foto = foto
-
-    abuelo.save()
-    return redirect('abuelos') 
 
 def eliminar_abuelo(request,id):
     abuelo = Abuelo.objects.get(pk = id)
     abuelo.delete()
-    return redirect('abuelos')
+
+    data = { 
+        'mensaje': 'El abuelo fue eliminado correctamente.', 
+        'type' : 'success', 
+        'tittle': 'Eliminar abuelo' 
+    } 
+    return JsonResponse(data)
+    #return redirect('abuelos')
 
 def remedio(request, id):
     remedios = Remedio.objects.filter(abuelo_id = id)
@@ -221,20 +290,27 @@ def creado_remedio(request, id):
     horaInicio = request.POST.get('horaInicio','')
     cantVeces = request.POST.get('cantVeces','')
 
-    remedio = Remedio.objects.filter(nombre = nombre)
+    remedio = Remedio.objects.filter(abuelo_id = abuelo.id).filter(nombre = nombre)
     usuario = request.session.get('usuario',None)
-    remedios = Remedio.objects.filter(abuelo_id = id)
     
     if len(remedio) == 0 : 
         remedio = Remedio(nombre=nombre, descripcion=descripcion, tratamiento=tratamiento, horaInicio=horaInicio, cantVeces=cantVeces,  abuelo=abuelo)
         remedio.save()
-
+        
         crear_alarmas(horaInicio, cantVeces,remedio.id)
-        messages.success(request, 'El Remedio fue registrado correctamente.')
-        return render(request, 'remedio.html', {'remedios': remedios, 'usuario' : usuario, 'abuelo': abuelo})
+        data = { 
+            'mensaje': 'El remedio fue registrado correctamente.', 
+            'type' : 'success', 
+            'tittle': 'Registro remedio' 
+        } 
+        return JsonResponse(data) 
     else:    
-        messages.warning(request, 'El usuario ingresado ya esta registrado. 123')
-        return render(request, 'remedio.html', {'remedios': remedios, 'usuario' : usuario, 'abuelo': abuelo})    
+        data = { 
+            'mensaje': 'El remedio ya esta registrado.', 
+            'type' : 'error', 
+            'tittle': 'Registro remedio' 
+        } 
+        return JsonResponse(data)
 
 def crear_alarmas(horaInicio, cantVeces, remedio_id):
     rango_horas = 24
@@ -253,34 +329,49 @@ def crear_alarmas(horaInicio, cantVeces, remedio_id):
 
 def editar_remedio(request, id):
     remedio = Remedio.objects.get(pk = id)
+    abuelo = Abuelo.objects.get(pk = remedio.abuelo_id)
     usuario = request.session.get('usuario',None)
-    return render(request, 'editar_remedio.html', {'remedio': remedio,'usuario':usuario})
+    return render(request, 'editar_remedio.html', {'remedio': remedio,'usuario':usuario, 'abuelo':abuelo})
     
 def editado_remedio(request, id):
-    remedio = Remedio.objects.get(pk = id)
-    abuelo = remedio.abuelo
-    usuario = request.session.get('usuario',None)
+    try:
+        remedio = Remedio.objects.get(pk = id)
+        abuelo = remedio.abuelo
+        usuario = request.session.get('usuario',None)
 
-    nombre = request.POST.get('nombre','')
-    descripcion = request.POST.get('descripcion','')
-    tratamiento = request.POST.get('tratamiento','')
-    horaInicio = request.POST.get('horaInicio','')
-    cantVeces = request.POST.get('cantVeces','')
-    
-    remedio.nombre = nombre
-    remedio.descripcion = descripcion
-    remedio.tratamiento = tratamiento
-    remedio.horaInicio = horaInicio
-    remedio.cantVeces = cantVeces
-    
-    remedio.save()
+        nombre = request.POST.get('nombre','')
+        descripcion = request.POST.get('descripcion','')
+        tratamiento = request.POST.get('tratamiento','')
+        horaInicio = request.POST.get('horaInicio','')
+        cantVeces = request.POST.get('cantVeces','')
+        
+        remedio.nombre = nombre
+        remedio.descripcion = descripcion
+        remedio.tratamiento = tratamiento
+        remedio.horaInicio = horaInicio
+        remedio.cantVeces = cantVeces
+        
+        remedio.save()
 
-    Alarma.objects.filter(remedio_id = remedio.id).delete()
-    crear_alarmas(horaInicio, cantVeces,remedio.id)
-
-    remedios = Remedio.objects.filter(abuelo_id = abuelo.id)
-    return render(request, 'remedio.html', {'remedios': remedios, 'usuario' : usuario, 'abuelo': abuelo})
-
+        Alarma.objects.filter(remedio_id = remedio.id).delete()
+        crear_alarmas(horaInicio, cantVeces,remedio.id)
+        
+        data = { 
+            'mensaje': 'El remedio fue editado correctamente.', 
+            'type' : 'success', 
+            'tittle': 'Editar remedio' 
+        } 
+        return JsonResponse(data)
+        
+        
+    except:
+        data = { 
+            'mensaje': 'Error al editar el remedio.', 
+            'type' : 'success', 
+            'tittle': 'Editar remedio' 
+        } 
+        return JsonResponse(data)
+        
 def eliminar_remedio(request, id):
     remedio = Remedio.objects.get(pk = id)
     abuelo = remedio.abuelo
@@ -310,7 +401,7 @@ def abuelo_remedios(request):
 def ver_alarmas(request, id):
     alarmas = Alarma.objects.filter(remedio_id = id)
     remedio = Remedio.objects.get(pk = id)
-    abuelo = Abuelo.objects.filter(id = remedio.abuelo_id)
+    abuelo = Abuelo.objects.get(id = remedio.abuelo_id)
 
     usuario = request.session.get('usuario',None)
     return render(request, 'ver_alarmas.html', {'alarmas': alarmas, 'usuario': usuario, 'abuelo': abuelo})

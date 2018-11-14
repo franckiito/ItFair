@@ -9,6 +9,7 @@
         {% load static %}
 
         <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css" >
+        <link rel="stylesheet" href="{% static "css/sweetalert2.min.css" %}" type="text/css">
         <link rel="stylesheet" href="{% static "css/all.css" %}"  type="text/css">
         <link rel="stylesheet" href="{% static "css/estilo.css" %}" type="text/css">
 
@@ -17,7 +18,7 @@
     <body>
         <div class="container">
             <header>
-                    <!--  Remove dark nav  -->
+                <!--  Remove dark nav  -->
                 <nav class="nav dark-nav fixed-top">
                     <div class="container">
                         <div class="nav-heading">
@@ -39,7 +40,7 @@
 
         <div class="container">
             <div class="jumbotron">
-                <form action="/perfil/editar/{{cuidador.id}}" method="POST" enctype="multipart/form-data">
+                <form id="form_editar" action="/perfil/editar/{{cuidador.id}}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-sm">
@@ -47,7 +48,7 @@
                         </div>
                         <div class="col-sm"></div>
                         <div class="col-sm">
-                            <img src="/media/{{cuidador.foto}}" />
+                            <img src="/media/{{cuidador.foto}}" class="d-block w-100 rounded mx-auto" alt="{{cuidador.nombre}}" />
                         </div>
                     </div>
                     <hr/>
@@ -56,7 +57,7 @@
                             <div class="form-group">
                                 <label>Run</label>
                                 <div class="col-md-6">
-                                    <input required disabled id="run"  name="run" type="text" placeholder="Ej. 16863353K" class="form-control input-md" required="" value="{{cuidador.run}}">
+                                    <input required disabled id="run"  name="run" type="text" placeholder="Ej. 16863353K" class="form-control input-md" value="{{cuidador.run}}">
                                 </div>
                             </div>
                         </div>
@@ -90,7 +91,6 @@
                         </div>
                     
                     </div>
-
 
                     <div class="row">
                         <div class="col-md-6">
@@ -135,7 +135,7 @@
                             <div class="form-group">
                                 <label></label>
                                 <div class="col-md-6">
-                                    <button id="guardar" name="guardar" class="form-control btn btn-primary">Guardar</button>
+                                    <input id="btn_editar" type="button" name="editar" class="form-control btn btn-primary" value="Editar">
                                 </div>
                             </div>
                         </div>                                                
@@ -152,5 +152,52 @@
     <script src="{% static "js/jquery.validate.js" %}"></script>
     <script src="{% static "js/jquery.Rut.js" %}"></script>
     <script src="{% static "js/app.js" %}"></script>
+
+    <script src="{% static "js/sweetalert2.min.js" %}"></script>
+
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $("#btn_editar").on("click",function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/perfil/editar/{{cuidador.id}}",
+                    data: $('#form_editar').serialize(),
+                    success: function(data) {
+                        if(data.type == 'error'){
+                            swal({
+                                title: data.tittle,
+                                text: data.mensaje,
+                                type: data.type,
+                                confirmButtonText: 'Aceptar'
+                            })
+
+                        }else {
+                            swal({
+                                title: data.tittle,
+                                text: data.mensaje,
+                                type: data.type,
+                                confirmButtonText: 'Aceptar'
+                            }).then((result) => {
+                                    if (result.value) {
+                                        window.location.href = '/abuelos';
+                                    }
+                                })
+                        }                        
+                    },
+                    error: function(data) {
+                        swal({
+                            title: data.tittle,
+                            text: data.mensaje,
+                            type: data.type,
+                            confirmButtonText: 'Aceptar'
+                        })
+                    }
+                });
+
+            })
+
+            
+        });
+    </script>
   </body>
 </html>

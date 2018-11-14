@@ -150,7 +150,7 @@
                 </div>
                 <div class="row">                                          
                     <div class="col-md-4">
-                        <button type="submit" class="btn btn-success btn-lg btn-block">Iniciar Sesión</button>
+                        <button id="btn_iniciar" type="button" class="btn btn-success btn-lg btn-block">Iniciar Sesión</button>
                     </div>
                 </div> 
             </form>
@@ -244,8 +244,6 @@
     <script src="{% static "js/jquery.Rut.js" %}"></script>
     <script src="{% static "js/app.js" %}"></script>
     <script src="{% static "js/sweetalert2.min.js" %}"></script>
-    <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
-    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
     <script type="text/javascript">
 
@@ -289,6 +287,59 @@
                     }
                 });
 
+            })
+            $("#btn_iniciar").on("click",function () {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/login/iniciar",
+                    data: $('#iniciarSesion').serialize(),
+                    success: function(data) {
+
+                        if(data.type == 'error'){
+                            swal({
+                                title: data.tittle,
+                                text: data.mensaje,
+                                type: data.type,
+                                confirmButtonText: 'Aceptar'
+                            })
+
+                        }else {
+                            if(data.tipo == 'cuidador'){
+                                swal({
+                                    title: data.tittle,
+                                    text: data.mensaje,
+                                    type: data.type,
+                                    confirmButtonText: 'Aceptar'
+                                }).then((result) => {
+                                        if (result.value) {
+                                            window.location.href = '/abuelos';
+                                        }
+                                    })
+                            }else{
+                                swal({
+                                    title: data.tittle,
+                                    text: data.mensaje,
+                                    type: data.type,
+                                    confirmButtonText: 'Aceptar'
+                                }).then((result) => {
+                                        if (result.value) {
+                                            window.location.href = 'abuelo/remedios/';
+                                        }
+                                    })
+                            }
+                        }
+                                                
+                    },
+                    error: function(data) {
+                        swal({
+                            title: data.tittle,
+                            text: data.mensaje,
+                            type: data.type,
+                            confirmButtonText: 'Aceptar'
+                        })
+                    }
+                });
             })
         });
     

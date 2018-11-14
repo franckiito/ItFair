@@ -9,6 +9,7 @@
         {% load static %}
 
         <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css" >
+        <link rel="stylesheet" href="{% static "css/sweetalert2.min.css" %}" type="text/css">
         <link rel="stylesheet" href="{% static "css/all.css" %}"  type="text/css">
         <link rel="stylesheet" href="{% static "css/estilo.css" %}" type="text/css">
 
@@ -22,7 +23,7 @@
                     <div class="container">
                         <div class="nav-heading">
                             <button class="toggle-nav" data-toggle="open-navbar1"><i class="fa fa-align-right"></i></button>
-                            <a class="brand" href="/abuelos">ItFair</a>
+                            <a class="brand" href="/remedio/{{abuelo.id}}">ItFair</a>
                         </div>
                         <div class="menu" id="open-navbar1">
                             <ul class="list">
@@ -39,7 +40,7 @@
 
         <div class="container">
             <div class="jumbotron">
-                <form action="/remedio/creado/{{abuelo.id}}" method="POST">
+                <form id="form_agrega" action="/remedio/creado/{{abuelo.id}}" method="POST">
                     {% csrf_token %}
                     <fieldset>
                         <h1>Crear Remedio</h1>
@@ -106,7 +107,7 @@
                             <div class="form-group">
                                 <label></label>
                                 <div class="col-md-6">
-                                    <button id="guardar" name="guardar" class="form-control btn btn-primary">Crear</button>
+                                    <input id="btn_crear" type="button" class="form-control btn btn-primary" value="Crear">
                                 </div>
                             </div>
                         </div>                                                
@@ -123,5 +124,54 @@
     <script src="{% static "js/jquery.validate.js" %}"></script>
     <script src="{% static "js/jquery.Rut.js" %}"></script>
     <script src="{% static "js/app.js" %}"></script>
+    <script src="{% static "js/sweetalert2.min.js" %}"></script>
+
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $("#btn_crear").on("click",function () {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/remedio/creado/{{abuelo.id}}",
+                    data: $('#form_agrega').serialize(),
+                    success: function(data) {
+
+                        if(data.type == 'error'){
+                            swal({
+                                title: data.tittle,
+                                text: data.mensaje,
+                                type: data.type,
+                                confirmButtonText: 'Aceptar'
+                            })
+
+                        }else {
+                            swal({
+                                title: data.tittle,
+                                text: data.mensaje,
+                                type: data.type,
+                                confirmButtonText: 'Aceptar'
+                            }).then((result) => {
+                                    if (result.value) {
+                                        window.location.href = '/remedio/{{abuelo.id}}';
+                                    }
+                                })
+                        }                        
+                    },
+                    error: function(data) {
+                        swal({
+                            title: data.tittle,
+                            text: data.mensaje,
+                            type: data.type,
+                            confirmButtonText: 'Aceptar'
+                        })
+                    }
+                });
+
+            })
+
+            
+        });
+    </script>
+
   </body>
 </html>

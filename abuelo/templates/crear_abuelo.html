@@ -9,6 +9,7 @@
         {% load static %}
 
         <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css" >
+        <link rel="stylesheet" href="{% static "css/sweetalert2.min.css" %}" type="text/css">
         <link rel="stylesheet" href="{% static "css/all.css" %}"  type="text/css">
         <link rel="stylesheet" href="{% static "css/estilo.css" %}" type="text/css">
 
@@ -39,10 +40,10 @@
 
         <div class="container">
             <div class="jumbotron">
-                <form action="/abuelos/save" method="POST" enctype="multipart/form-data">
+                <form id="form_agrega" action="/abuelos/save" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <fieldset>
-                        <h1>{{titulo}}</h1>
+                        <h1>Crear Abuelo</h1>
                     </fieldset>
                     <hr/>
                     <div class="row">
@@ -122,7 +123,7 @@
                             <div class="form-group">
                                 <label></label>
                                 <div class="col-md-6">
-                                    <button id="guardar" name="guardar" class="form-control btn btn-primary">Crear</button>
+                                    <input id="btn_crear" type="button" class="form-control btn btn-primary" value="Crear">
                                 </div>
                             </div>
                         </div>                                                
@@ -139,5 +140,53 @@
     <script src="{% static "js/jquery.validate.js" %}"></script>
     <script src="{% static "js/jquery.Rut.js" %}"></script>
     <script src="{% static "js/app.js" %}"></script>
+    <script src="{% static "js/sweetalert2.min.js" %}"></script>
+
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $("#btn_crear").on("click",function () {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/abuelos/save",
+                    data: $('#form_agrega').serialize(),
+                    success: function(data) {
+
+                        if(data.type == 'error'){
+                            swal({
+                                title: data.tittle,
+                                text: data.mensaje,
+                                type: data.type,
+                                confirmButtonText: 'Aceptar'
+                            })
+
+                        }else {
+                            swal({
+                                title: data.tittle,
+                                text: data.mensaje,
+                                type: data.type,
+                                confirmButtonText: 'Aceptar'
+                            }).then((result) => {
+                                    if (result.value) {
+                                        window.location.href = '/abuelos';
+                                    }
+                                })
+                        }                        
+                    },
+                    error: function(data) {
+                        swal({
+                            title: data.tittle,
+                            text: data.mensaje,
+                            type: data.type,
+                            confirmButtonText: 'Aceptar'
+                        })
+                    }
+                });
+
+            })
+
+            
+        });
+    </script>
   </body>
 </html>
