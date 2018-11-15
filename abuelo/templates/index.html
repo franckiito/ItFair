@@ -107,15 +107,6 @@
         <!--Fin Carousel-->
         
         <!--Servicios-->
-        {% if messages %}        
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
-            </div>            
-            {% endfor %}        
-        {% endif %}
-
-
         <div class="container" id="servicio">
             <h1>Servicios</h1>
             <p>Nuestra plataforma cuenta con servicios de alarmas para ayudar a nuestros abuelos
@@ -138,13 +129,13 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Run</label>
-                            <input required type="text" class="form-control" name="run" placeholder="Ingrese run">
+                            <input required type="text" class="form-control" id="run" name="run" placeholder="Ingrese run">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Contraseña</label>
-                            <input required type="password" class="form-control" name="contrasenia" placeholder="Contraseña">
+                            <input required type="password" class="form-control" id="contrasenia" name="contrasenia" placeholder="Contraseña">
                         </div>
                     </div>
                 </div>
@@ -238,18 +229,17 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="{% static "js/jquery-3.3.1.js" %}"></script>
+    <script src="{% static "js/sweetalert2.min.js" %}"></script>
     <script src="{% static "js/popper.js" %}"></script>
     <script src="{% static "js/bootstrap.js" %}"></script>
     <script src="{% static "js/jquery.validate.js" %}"></script>
     <script src="{% static "js/jquery.Rut.js" %}"></script>
     <script src="{% static "js/app.js" %}"></script>
-    <script src="{% static "js/sweetalert2.min.js" %}"></script>
 
     <script type="text/javascript">
 
         $( document ).ready(function() {
             $("#btn_registrar").on("click",function () {
-
                 $.ajax({
                     type: "POST",
                     url: "/cuidador/registrar",
@@ -289,7 +279,6 @@
 
             })
             $("#btn_iniciar").on("click",function () {
-
                 $.ajax({
                     type: "POST",
                     url: "/login/iniciar",

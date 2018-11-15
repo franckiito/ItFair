@@ -258,16 +258,24 @@ def editado_abuelo(request,id):
 
 
 def eliminar_abuelo(request,id):
-    abuelo = Abuelo.objects.get(pk = id)
-    abuelo.delete()
+    try:
 
-    data = { 
-        'mensaje': 'El abuelo fue eliminado correctamente.', 
-        'type' : 'success', 
-        'tittle': 'Eliminar abuelo' 
-    } 
-    return JsonResponse(data)
-    #return redirect('abuelos')
+        abuelo = Abuelo.objects.get(pk = id)
+        abuelo.delete()
+
+        data = { 
+            'mensaje': 'El abuelo fue eliminado correctamente.', 
+            'type' : 'success', 
+            'tittle': 'Eliminar abuelo' 
+        } 
+        return JsonResponse(data)
+    except:
+        data = { 
+            'mensaje': 'Error al eliminar abuelo.', 
+            'type' : 'error', 
+            'tittle': 'Eliminar abuelo' 
+        } 
+        return JsonResponse(data)
 
 def remedio(request, id):
     remedios = Remedio.objects.filter(abuelo_id = id)
