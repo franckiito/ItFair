@@ -59,6 +59,7 @@
                     <th scope="col">Teléfono</th>
                     <th scope="col">Remedios</th>
                     <th scope="col">Localización</th>
+                    <th scope="col">Historial</th>
                     <th scope="col">Accion</th>
                   </tr>
                 </thead>
@@ -71,9 +72,15 @@
                             <td>{{elemento.fechaNacimiento}}</td>
                             <td>{{elemento.telefono}}</td>
                             <td><a href="/remedio/{{elemento.id}}">Ver</a></td>
+<<<<<<< HEAD
                             <td>Ver</td>
                             <td> <a href="/abuelos/editar/{{elemento.id}}">Editar</a> <a href="/abuelos/eliminar/{{elemento.id}}">Eliminar</a><input id="btn_eliminar" type="button" class="form-control btn btn-primary" value="Eliminar"></td>
                             <input type="hidden" id="abuelo_id" value="{{elemento.id}}">
+=======
+                            <td><a href="/mapa/{{elemento.id}}">Ver</a></td>                            
+                            <td><a href="/historial/{{elemento.id}}">Ver</a></td>
+                            <td> <a href="/abuelos/editar/{{elemento.id}}">Editar</a> <a href="/abuelos/eliminar/{{elemento.id}}">Eliminar</a></td>
+>>>>>>> Rossana
                         </tr>                                                
                     {% endfor %}
                 </tbody>

@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css" >
         <link rel="stylesheet" href="{% static "css/all.css" %}"  type="text/css">
         <link rel="stylesheet" href="{% static "css/estilo.css" %}" type="text/css">
+        <link rel="stylesheet" href="{% static "css/sweetalert2.min.css" %}" type="text/css">
 
         <title>Help Memory</title>
     </head>
@@ -69,21 +70,23 @@
             {% for elemento in alarmas %}
                 {% for e in elemento %}         
                     <input type="hidden" class="nombre_alarma" value="{{e.remedio.nombre}}" />
-                    <input type="hidden" class="alarmas" value="{{e.hora}}:12" />                                        
+                    <input type="hidden" class="alarmas" value="{{e.hora}}:42" />
+                    <input type="hidden" class="alarmas_id" value="{{e.id}}" />
                 {% endfor %}                        
             {% endfor %}
         </div>
 
               
-        <!--<form action="abuelo/remedios/{{abuelo.id}}/{{alarma.id}}" method="POST">
+        <form action="/abuelo/registrar" method="POST" id="parar_alarma_form">
             {% csrf_token %}
-            <div class="container">
-                    
-                </div>          
-        </form>-->
+            <input type="hidden" id="id_abuelo" name="id_abuelo" value="{{abuelo.id}}"/>
+            <input type="hidden" id="alarma_id" name="alarma_id" value=""/>
+            <input type="hidden" id="estado" name="estado" value=""/>
+            <input type="hidden" id="fecha" name="fecha" value=""/>
+        </form>
 
-        <button type="submit" id="start" class="btn-primary">Start</button>
-        <button id="stop" class="btn-danger">Stop</button>
+        <button type="submit" id="start" class="btn-primary" style="display:none">Start</button>
+        <button id="stop" class="btn-danger" style="display:none">Stop</button>
         
 
         <!-- Optional JavaScript -->
@@ -94,28 +97,115 @@
     <script src="{% static "js/jquery.validate.js" %}"></script>
     <script src="{% static "js/jquery.Rut.js" %}"></script>
     <script src="{% static "js/app.js" %}"></script>
-    <script src="{% static "js/playsound.js" %}"></script>    
+    <script src="{% static "js/playsound.js" %}"></script>
+    <script src="{% static "js/sweetalert2.min.js" %}"></script>    
+
     <script type="text/javascript">
 
         var x = document.getElementsByClassName("alarmas");
+        var n = document.getElementsByClassName("nombre_alarma");
+        var y = document.getElementsByClassName("alarmas_id");
+
+        var sonido_alarma = false;
+        var tiempo_alarma = 11;
 
         window.setInterval(function(){
-            /// call your function here      
-            //
             
             var dt = new Date();
             var time = dt.getHours() + ":" + dt.getMinutes();
-            console.log(time);
+            console.log(time);            
 
             jQuery.each( x, function( i, val ) {
                 if(val.value == time) {
-                    console.log("Es hora de alarma :)");
-                    $('#start').trigger('click');
+                    if(sonido_alarma == false){
+                        if(tiempo_alarma != 0){
+                            $('#start').trigger('click');
+                            console.log('es hora de sonar la alarma :)')
+
+                            var fechadt = new Date();
+
+                            if(fechadt.getDay() <= 9){
+                                var fecha = 
+                                "0" + fechadt.getDay() + "/" + fechadt.getMonth()  + "/" +  + fechadt.getFullYear();
+                            }else {
+                                var fecha = 
+                                fechadt.getDay() + "/" + fechadt.getMonth()  + "/" +  + fechadt.getFullYear();
+                            }
+                            
+
+                            jQuery('#alarma_id').val(y[0].value);
+                            jQuery('#estado').val('OK');
+                            jQuery('#fecha').val(fecha);
+
+                            swal({
+                                title: 'Alarma!!!!',
+                                text: 'Es hora de ' + n[0].value,
+                                type: 'info',
+                                confirmButtonText: 'Aceptar'
+                            }).then((result) => {
+                                if (result.value) {
+                                    sonido_alarma = true;
+                                    $('#stop').trigger('click');
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/abuelo/registrar",
+                                        data: $('#parar_alarma_form').serialize(),
+                                        success: function(data) {
+                                            console.log(data);
+                                        },
+                                        error: function(data) {
+                                            console.log(data);
+                                        }
+                                    });
+                                }
+                            })
+
+                            tiempo_alarma = tiempo_alarma - 1;
+
+                        }else {
+
+                            var fechadt = new Date();
+                            var fecha = 
+                            fechadt.getFullYear() + "/" + fechadt.getMonth()  + "/" +  + fechadt.getDay();
+
+                            jQuery('#alarma_id').val(y[0].value);
+                            jQuery('#estado').val('NO');
+                            jQuery('#fecha').val(fecha);
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/abuelo/registrar",
+                                data: $('#parar_alarma_form').serialize(),
+                                success: function(data) {
+                                    console.log(data);
+                                },
+                                error: function(data) {
+                                    console.log(data);
+                                }
+                            });
+
+                            swal({
+                                title: 'No se tomó el remedio :( !',
+                                text: 'Es hora de ' + n[0].value,
+                                type: 'error',
+                                confirmButtonText: 'Aceptar'
+                            }).then((result) => {
+                                if (result.value) {
+                                    sonido_alarma = true;
+                                    $('#stop').trigger('click');
+                                }
+                            })
+                        }    
+                    } else {
+                        sonido_alarma = true;
+                    }                                    
                 }                
             });
             
             //$.playSound("/static/sounds/alarma1.mp3");
         }, 5000);
+            
     </script>
   </body>
 </html>
