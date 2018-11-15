@@ -9,6 +9,8 @@ from .models import Alarma
 from .models import Historial
 from django.contrib import messages
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from time import gmtime, strftime
 
 #importar user
 from django.contrib.auth.models import User
@@ -22,13 +24,11 @@ def index(request):
     usuario = request.session.get('usuario',None)
     return render(request,'index.html')
 
-def registrar(request):
-    print("ajax request")
+def registrar(request):    
     run = request.POST.get('run','')
     nombre = request.POST.get('nombre','')
     fechaNacimiento = request.POST.get('fechaNacimiento','')
-    correo = request.POST.get('correo','')
-    print("ajax request correo")
+    correo = request.POST.get('correo','')    
     telefono = request.POST.get('telefono','')
     direccion = request.POST.get('direccion','')
     contrasenia = request.POST.get('contrasenia','')
@@ -36,22 +36,22 @@ def registrar(request):
     cuidador = Cuidador.objects.filter(run=run)
 
     if len(cuidador) == 0 :
-        cuidador = Cuidador(run=run, nombre=nombre, fechaNacimiento=fechaNacimiento, correo=correo, telefono=telefono,  direccion=direccion, contrasenia= contrasenia)                
+        cuidador = Cuidador(run=run, nombre=nombre, fechaNacimiento=fechaNacimiento, correo=correo, telefono=telefono,  direccion=direccion, contrasenia= contrasenia)
         cuidador.save()
 
         data = {
-        'mensaje': 'El usuario fue registrado correctamente.',
-        'type' : 'success',
-        'tittle': 'Registro exitoso!'
+            'mensaje': 'El usuario fue registrado correctamente.',
+            'type' : 'success',
+            'tittle': 'Registro exitoso!'
         }
         
         return JsonResponse(data)
         #return render(request,'index.html',{'mensaje':'El usuario fue registrado correctamente.'})
     else:
         data = {
-        'mensaje': 'El usuario ingresado ya esta registrado.',
-        'type' : 'error',
-        'tittle': 'Error!'
+            'mensaje': 'El usuario ingresado ya esta registrado.',
+            'type' : 'error',
+            'tittle': 'Error!'
         }
         return JsonResponse(data)
         #return render(request,'index.html',{'mensaje':'El usuario ingresado ya esta registrado.'})
@@ -315,13 +315,32 @@ def ver_alarmas(request, id):
     usuario = request.session.get('usuario',None)
     return render(request, 'ver_alarmas.html', {'alarmas': alarmas, 'usuario': usuario, 'abuelo': abuelo})
 
-#def registrar_consumo_remedio(request, abuelo_id, alarma_id):
-#    abuelo_id = request.POST.get('abuelo_id','')
-#    alarma_id = request.POST.get('alarma_id','')
-#    estado = request.POST.get('estado','')
-        
-    #fecha_ahora = datetime.strptime(datetime.now(), "%d-%b-%Y %H:%M:%S")
-    #historial = Historial(estado = estado, fecha = fecha_ahora, abuelo_id = abuelo_id, alarma_id=alarma_id)
-    #historial.save()
+@csrf_exempt
+def registrar_consumo_remedio(request):
     
-#    return redirect('abuelos_remedios')
+    id = request.session.get('id', None)
+
+    alarma_id = request.POST.get('alarma_id','')
+    estado = request.POST.get('estado','')
+    fecha = request.POST.get('fecha','')
+
+    showtime = strftime("%Y-%m-%d", gmtime())
+
+    historial = Historial(estado = estado, fecha = showtime, abuelo_id = id, alarma_id=alarma_id)
+    historial.save()
+
+    data = {
+        'mensaje': 'Registrado en historial'
+    }
+    
+    return render(request, 'abuelo_remedios.html', {'data' : data})
+
+def ver_historial(request, id):
+    usuario = request.session.get('usuario',None)
+    abuelo = Abuelo.objects.get(pk = id)
+    return render(request, 'historial.html', {'abuelo': abuelo, 'usuario': usuario, 'historial' : Historial.objects.filter(abuelo_id = id)})
+
+def ver_mapa(request, id):
+    usuario = request.session.get('usuario',None)
+    abuelo = Abuelo.objects.get(pk = id)
+    return render(request, 'mapa.html', {'abuelo': abuelo, 'usuario': usuario})

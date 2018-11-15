@@ -32,56 +32,41 @@
                         </div>
                     </div>
                 </nav>
-            </header>
+            </header>    
             <div class="container">   
                 <div class="jumbotron">
-                    <h1 class="display-4">Hola! {{usuario}}</h1>
-                    <p class="lead">Este es el sitio de administración, acá podrás gestionar y ver el comportamiento de sus abuelitos :)!</p>
-                    <hr class="my-4">
-                    <p>Presione el siguiente botón para agregar uno nuevo.</p>
-                    <a class="btn btn-primary" href="/abuelos/crear" role="button">Registrar nuevo</a>                    
+                    <h1 class="display-4">Remedios de {{abuelo.nombre}}</h1>
+                    <p class="lead">En este sitio podra administrar y gestionar los remedios</p>
+                    <hr class="my-4">                    
                 </div>                
             </div>    
-            <br/> 
+            <br/>         
         </div>        
-
-              
 
         <div class="container">
             <table class="table table-striped">
                 <thead>
-                  <tr>                    
-                    <th scope="col">#</th>
-                    <th scope="col">Rut</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Edad</th>
-                    <th scope="col">Teléfono</th>
-                    <th scope="col">Remedios</th>
-                    <th scope="col">Localización</th>
-                    <th scope="col">Historial</th>
-                    <th scope="col">Accion</th>
-                  </tr>
+                    <tr>                        
+                        <th scope="col">Nombre Remedio</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Estado</th>                                              
+                    </tr>
                 </thead>
                 <tbody>
-                    {% for elemento in abuelos %}
-                        <tr>
-                            <th scope="col"><img height="50px" width="70px" src="/media/{{elemento.foto}}"></th>
-                            <th scope="row">{{elemento.run}}</th>
-                            <td>{{elemento.nombre}}</td>
-                            <td>{{elemento.fechaNacimiento}}</td>
-                            <td>{{elemento.telefono}}</td>
-                            <td><a href="/remedio/{{elemento.id}}">Ver</a></td>
-                            <td><a href="/mapa/{{elemento.id}}">Ver</a></td>                            
-                            <td><a href="/historial/{{elemento.id}}">Ver</a></td>
-                            <td> <a href="/abuelos/editar/{{elemento.id}}">Editar</a> <a href="/abuelos/eliminar/{{elemento.id}}">Eliminar</a></td>
+                    {% for elemento in historial %}
+                        <tr>                            
+                            <td>{{elemento.alarma.remedio.nombre}}</td>
+                            <td>{{elemento.fecha}}</td>
+                            <td>{{elemento.estado}}</td>                            
                         </tr>                                                
                     {% endfor %}
                 </tbody>
-              </table>
-          </div>          
+            </table>
+        </div> 
+              
 
-        <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <!-- Optional JavaScript --> 
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->    
     <script src="{% static "js/jquery-3.3.1.js" %}"></script>
     <script src="{% static "js/popper.js" %}"></script>
     <script src="{% static "js/bootstrap.js" %}"></script>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        {% load static %}
+
+        <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css" >
+        <link rel="stylesheet" href="{% static "css/all.css" %}"  type="text/css">
+        <link rel="stylesheet" href="{% static "css/estilo.css" %}" type="text/css">
+        <style>
+            /* Always set the map height explicitly to define the size of the div
+             * element that contains the map. */
+            #map {
+              height: 100%;
+            }
+            /* Optional: Makes the sample page fill the window. */
+            html, body {
+              height: 100%;
+              margin: 0;
+              padding: 0;
+            }
+            #description {
+              font-family: Roboto;
+              font-size: 15px;
+              font-weight: 300;
+            }
+      
+            #infowindow-content .title {
+              font-weight: bold;
+            }
+      
+            #infowindow-content {
+              display: none;
+            }
+      
+            #map #infowindow-content {
+              display: inline;
+            }
+      
+            .pac-card {
+              margin: 10px 10px 0 0;
+              border-radius: 2px 0 0 2px;
+              box-sizing: border-box;
+              -moz-box-sizing: border-box;
+              outline: none;
+              box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+              background-color: #fff;
+              font-family: Roboto;
+            }
+      
+            #pac-container {
+              padding-bottom: 12px;
+              margin-right: 12px;
+            }
+      
+            .pac-controls {
+              display: inline-block;
+              padding: 5px 11px;
+            }
+      
+            .pac-controls label {
+              font-family: Roboto;
+              font-size: 13px;
+              font-weight: 300;
+            }
+      
+            #pac-input {
+              background-color: #fff;
+              font-family: Roboto;
+              font-size: 15px;
+              font-weight: 300;
+              margin-left: 12px;
+              padding: 0 11px 0 13px;
+              text-overflow: ellipsis;
+              width: 400px;
+            }
+      
+            #pac-input:focus {
+              border-color: #4d90fe;
+            }
+      
+            #title {
+              color: #fff;
+              background-color: #4d90fe;
+              font-size: 25px;
+              font-weight: 500;
+              padding: 6px 12px;
+            }
+            #target {
+              width: 345px;
+            }
+          </style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                    <!--  Remove dark nav  -->
+                <nav class="nav dark-nav fixed-top">
+                    <div class="container">
+                        <div class="nav-heading">
+                            <button class="toggle-nav" data-toggle="open-navbar1"><i class="fa fa-align-right"></i></button>
+                            <a class="brand" href="#">ItFair</a>
+                        </div>
+                        <div class="menu" id="open-navbar1">
+                            <ul class="list">
+                            <li><a href="/perfil">Bienvenid@, {{usuario}} </a></li>                    
+                            <li><a href="{% url "cerrar_session" %}">Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>    
+               
+            <br/>
+        </div>
+              
+
+        <!-- Optional JavaScript --> 
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->    
+    <script src="{% static "js/jquery-3.3.1.js" %}"></script>
+    <script src="{% static "js/popper.js" %}"></script>
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <script src="{% static "js/jquery.validate.js" %}"></script>
+    <script src="{% static "js/jquery.Rut.js" %}"></script>
+    <script src="{% static "js/app.js" %}"></script>
+
+
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box" value="{{abuelo.direccion}}">
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var myLatLng = {lat: -33.443331, lng: -70.606384};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'Abuelito!'
+        });
+      }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiMF9clnyOZoQLxeVloSsUfMJ1jYpK6zY&callback=initMap">
+    </script>
+
+  </body>
+</html>
